@@ -10,9 +10,9 @@
 
 void modify(char* ptr)
 {	int temp;
-	char* ptr1 = ptr;	 
-	temp= 0xF1 && 127;
-	*ptr=temp
+	char* ptr1 = ptr;
+	temp= 0xF1 & 127;
+	*ptr=temp;
 	ptr++;
 	*ptr += 17;
 	ptr += 2;
@@ -29,7 +29,7 @@ void modify(char* ptr)
 void main()
 {
     int index;
-	unsigned char arr[8], arroriginal[8]={0xEE,0x12,0x77,0xBE,0x66,0x54,0x33,0xf0};
+    unsigned char arr[8], arroriginal[8]={0xEE,0x12,0x77,0xBE,0x66,0x54,0x33,0xf0};
     for(index=0;index<8;index++)
     {
     arr[index] = arroriginal[index];
