@@ -25,7 +25,7 @@ void flip(uint8_t* value)
 
 void main()
 {
-	uint8_t a=0,b=0,c=0,x=0,y=0,z=0,state=0,input=0;
+	uint8_t a=0,b=0,c=0,x=0,y=0,z=0,state=0,input=0,y_time=0,x_time=0;
 	uint8_t* a_ptr=&a;
 	uint8_t* b_ptr=&b;
 	uint8_t* c_ptr=&c;
@@ -35,12 +35,23 @@ void main()
 	state = state_1R;	
 	while(1)
 	{	
-
+		flip(z_ptr);
+		if(y_time==2)
+		{
+			flip(y_ptr);
+			y_time=0;
+		}
+		if(x_time==4)
+		{
+			flip(x_ptr);
+			x_time=0;
+		}
+		printf("\n\r a=%d, b=%d, c=%d, x=%d, y=%d, z=%d",a,b,c,x,y,z);
 		printf("\n\r Enter next input");
 		while(1)		
 		{				
 			input=getchar();
-			if((input=='a')||(input=='b')||(input=='c')||(input=='x')||(input=='y')||(input=='z'))
+			if((input=='a')||(input=='b')||(input=='c'))
 			{
 				break;			
 			}
@@ -78,7 +89,7 @@ void main()
 		switch(state)
 		{
 
-			case state_1B:
+			/*case state_1B:
 			{
 			printf("\n\rcurrent state is 1B");
 			if(a==0)
@@ -276,9 +287,9 @@ void main()
 				printf("\n\rnext state is 3R");
 			}	
 			break;
-			}
+			}*/
 
-/*			
+			
 			case state_3R:			
 			{
 				printf("\n\rCurrent state is 3R");
@@ -308,7 +319,9 @@ void main()
 				}	
 				break;
 			}
-*/
+
 		}
+		y_time++;
+		x_time++;
 	}
 }
