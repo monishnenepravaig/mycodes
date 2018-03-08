@@ -26,11 +26,9 @@ fail,
 }Buffer_status;
 
 
-uint8_t buffer_add_item(buffer* cbptr,uint8_t data);
-uint8_t buffer_remove_item(CB_t* cbptr,uint8_t* store);
-uint8_t buffer_is_full(CB_t* cbptr);
-uint8_t buffer_is_empty(CB_t* cbptr);
-uint8_t buffer_my_peek(CB_t* cbptr, uint16_t position,uint8_t* store);
-uint8_t buffer_init(CB_t* cbptr,uint16_t length);
-uint8_t buffer_destroy(buffer_typedef* cbptr);
+Buffer_status buffer_add_item(buffer_typedef* cbptr,uint8_t data);
+Buffer_status buffer_remove_item(buffer_typedef* cbptr,uint8_t* store);
+Buffer_status buffer_end_reached(buffer_typedef* cbptr);
+Buffer_status buffer_init(buffer_typedef* cbptr,uint16_t length);
+Buffer_status buffer_destroy(buffer_typedef* cbptr);
 

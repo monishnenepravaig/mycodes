@@ -1,10 +1,8 @@
-	
-	defined = -DPROJECT1	-DCMOCKA 
 
 	common_sources= ESD_Project.c\
 			ESD_Buffer_Handling.c				
 	
-	common_includes= -I ../include/common\
+	common_includes= -I ../include/common
 
 	common_flags=	$(defined) \
 			-Wall \
@@ -13,8 +11,7 @@
 			-O0 \
 			-std=c99 \
 			-DVERBOSE \
-	       		-lc\
-			$(cmocka_flags) 
+	       		-lc
 
 	objdir=../object
 	srcdir=../src
@@ -23,53 +20,12 @@
 	depdir=../dep
 	headdir=../header
 
-ifeq	($(PLATFORM),BBB)
-	CC= arm-linux-gnueabihf-gcc
-	flags=	$(common_flags) \
-		-mcpu=cortex-a8 \
-		-mthumb \	
-		-mfloat-abi=hard
-	sources =	$(common_sources)
-	includes =	$(common_includes)		
-endif
-
-ifeq	($(PLATFORM),KL25Z)
-	CC=arm-none-eabi-gcc
-	flags=	$(common_flags) \
-		-mthumb \
-		-mfpu=fpv4-sp-d16 \
-		-specs=nosys.specs \
-	 	-mcpu=cortex-m0 \
-		-march=armv6-m	\
-		-mfloat-abi=soft
-		-Wl
-		-Map=project1.map 
-		-T ../platform/MKL25Z128xxx4_flash.ld	
-	c_sources =	$(common_sources) \
-			-system_MKL25Z4.c
-	s_sources =	-startup_MKL25Z4.S
-	sources =	$(c_sources) \
-			$(s_sources)
-	includes =	$(common_includes) \
-			-I ../include/CMSIS\
-			-I ../include/kl25z	
-
-endif
-
-ifeq	($(PLATFORM),HOST)
 	CC=gcc
 	flags=	$(common_flags)
 	sources =	$(common_sources)
-	includes =	$(common_includes)	
-endif
-
-ifeq ($(PLATFORM),KL25Z)
-	OBJS:= $(c_sources:.c=.o) $(s_sources:.S=.o)
-	C_DEPS:= $(c_sources:.c=.d) $(s_sources:.S=.d)
-else
+	includes =	$(common_includes)
 	objects:= $(sources:.c=.o)
-	deps:= $(sources:.c=.d)	
-endif
+	deps:= $(sources:.c=.d)		
 
 .PHONY:	compile-all \
 	clean \
@@ -95,7 +51,7 @@ endif
 	$(CC)	$(flags)	$(includes)	-M	$<	-o	$@
 
 build:	$(objects)	$(deps)
-	$(CC)	$(flags)	$(includes)	-o	project3.elf	$(objects)
+	$(CC)	$(flags)	$(includes)	-o	ESD_lab3.elf	$(objects)
 
 compile-all:	$(objects) 
 
