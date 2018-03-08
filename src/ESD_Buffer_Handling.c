@@ -41,9 +41,9 @@ Buffer_status buffer_add_item(buffer_typedef* cbptr,uint8_t data)
 		{return Buffer_Full;}
 	else
 	{
-		cbptr->buffptr++;
 		(cbptr->count)++;
 		*(cbptr->buffptr) = data;
+		cbptr->buffptr++;
 		return Success;
 	}
 }
@@ -63,9 +63,9 @@ Buffer_status buffer_remove_item(buffer_typedef* cbptr,uint8_t* store)
 		{return Buffer_Empty;}
 	else
 	{
-		cbptr->buffptr++;
-		(cbptr->count)--;
+		//(cbptr->count)--;
 		*store=*(cbptr->buffptr);
+		cbptr->buffptr++;
 		return Success;
 	}	
 }
@@ -93,6 +93,7 @@ Buffer_status buffer_end_reached(buffer_typedef* cbptr)
 Buffer_status buffer_destroy(buffer_typedef* cbptr)
 {
 	free(cbptr->buffptr);
+	cbptr->buffptr = NULL;
 	return Success;
 }
 

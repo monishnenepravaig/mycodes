@@ -12,7 +12,8 @@
 Buffer_status buffer_create(void)
 {
 	uint16_t buffer_size=0;
-	uint8_t i=0,error_check=0;
+	uint8_t i=0;
+	Buffer_status error_check = 0;
 	my_printf(size_buffer_txt_0);
 	print_number(buffer_number);
 	while(error_check==0)
@@ -22,7 +23,7 @@ Buffer_status buffer_create(void)
 			my_printf(size_buffer_txt_1_initial);
 			//buffer_size = fetch_number();
 			scanf("%hd",&buffer_size);
-			if((buffer_size<32)||(buffer_size>2800)||(buffer_size%16!=0))
+			if((buffer_size<32)||(buffer_size>3200)||(buffer_size%32!=0))
 			{
 				my_printf(invalid_number_txt);	
 			}		
@@ -75,11 +76,30 @@ Buffer_status buffer_create(void)
 
 Buffer_status buffer_delete(uint8_t buffer_number)
 {
-	uint8_t i;
-	i = buffer_destroy(&buffer_storage[buffer_number]);
-	my_printf(buffer_deleted_txt);
-	print_number(buffer_number);
-	return i;
+	Buffer_status error_check = 0;
+	error_check = buffer_destroy(&buffer_storage[buffer_number]);
+	if(error_check==Success)
+	{
+		my_printf(buffer_deleted_txt);
+		print_number(buffer_number);
+	}
+	return error_check;
+}
+
+Buffer_status buffer_flush(uint8_t buffer_number)
+{
+	Buffer_status error_check = 0;
+	uint8_t temp_storage=0;
+	buffer_structure_ptr = &buffer_storage[buffer_number];
+	uint8_t* buffer_temp_ptr = buffer_structure_ptr->buffptr;
+	buffer_structure_ptr->buffptr = buffer_structure_ptr->start;
+	do
+	{
+		error_check=buffer_remove_item(&buffer_storage[buffer_number],&temp_storage);
+		putchar(temp_storage);
+	}while(error_check!=Buffer_Empty);
+ 	buffer_structure_ptr->buffptr = buffer_temp_ptr;
+	return error_check;
 }
 
 void my_printf(uint8_t* text_ptr)
@@ -156,16 +176,50 @@ int main(void)
 		}
 		}while(exit_code==0);
 		exit_code=0;
+		my_printf(buffer_instructions_txt);
 		do
 		{
 			key_pressed=getchar();
+			characters_count++;
 			switch(key_pressed)
 			{
 				case '=':
+				{
+					 buffer_flush(0);
+				}
 				break;
 
 				case '?':
-				break;
+				{
+					buffer_number = max_buffers_created+1;
+					do
+					{
+						buffer_number--;
+						buffer_structure_ptr = &buffer_storage[buffer_number];
+						if(buffer_structure_ptr->buffptr != NULL)
+						{
+							my_printf(buffer_number_txt);
+							print_number(buffer_number);
+							my_printf(buffer_start_address_txt);
+							//print_number();
+							my_printf(buffer_end_address_txt);
+							//print_number();
+							my_printf(buffer_size_txt);
+							print_number(buffer_storage[buffer_number].length);
+							my_printf(bytes_txt);
+							my_printf(buffer_used_txt);
+							print_number(buffer_storage[buffer_number].count);
+							my_printf(bytes_txt);
+							my_printf(buffer_unused_txt);
+							print_number(buffer_storage[buffer_number].length-buffer_storage[buffer_number].count);
+							my_printf(bytes_txt);
+						}		
+					}while(buffer_number!=0);
+					my_printf(buffer_query_txt);
+					print_number(characters_count);
+					characters_count=0;
+					break;
+				}
 
 				case '+':
 				{
@@ -177,12 +231,7 @@ int main(void)
 							buffer_number = max_buffers_created + 1;
 						}
 						error_check = buffer_create();
-						if(error_check ==  Success)
-						{
-							exit_code=1;
-						}
-					}while(exit_code==0);
-					exit_code=0;
+					}while(error_check !=  Success);
 					break;
 				}
 
@@ -203,18 +252,13 @@ int main(void)
 							my_printf(invalid_number_txt);
 							error_check = fail;			
 						}
-						if(error_check ==  Success)
-						{
-							exit_code=1;
-						}
-					}while(exit_code==0);
-					exit_code=0;	
+					}while(error_check !=  Success);
 					break;
 				}
 
 				case '@':
 				{
-					buffer_number = max_buffers_created;
+					buffer_number = max_buffers_created+1;
 					do
 					{
 						buffer_number--;
@@ -223,14 +267,26 @@ int main(void)
 						{
 							error_check = buffer_delete(buffer_number);
 						}		
-					}
-					while(buffer_number!=0);
+					}while(buffer_number!=0);
 					max_buffers_created = 0;
 					exit_code=1;
 					break;
-				}
+				}	
 							
 				default:
+				{
+					if ((key_pressed>='A')&&(key_pressed<='Z'))
+					{
+						putchar(key_pressed);
+						error_check = buffer_add_item(&buffer_storage[0],key_pressed);
+						if(error_check==Buffer_Full)
+						{
+							my_printf(buffer_txt);
+							print_number(0);
+							my_printf(full_txt);
+						}
+					}
+				}
 				break;					
 			}
 			key_pressed=0;
