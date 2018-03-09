@@ -3,6 +3,13 @@
 #include <mcs51reg.h>
 #include <stdint.h>
 #include <malloc.h>
+#ifdef DEBUG
+#define DEBUGPORT(x) dataout(0xFFFF,x); // generates a MOVX 0FFFFh,x where x is an 8-bit value
+#else
+#define DEBUGPORT(x) // empty statement, nothing passed on from the preprocessor to the compiler
+#endif
+#define HEAP_SIZE (0x4000)   // size must be smaller than available XRAM
+#define NULL (void *)0
 typedef struct
 {
     uint8_t buffer_id;
@@ -13,8 +20,6 @@ typedef struct
     int16_t count;//used
 }buffer_typedef;
 
-# define NULL (void *)0
-
 typedef enum
 {
 Buffer_Full,
@@ -23,11 +28,13 @@ Success,
 Null_Error,
 fail,
 }Buffer_status;
+
 __xdata buffer_typedef buffer_storage[20];
 __xdata buffer_typedef* buffer_structure_ptr;
-__xdata uint8_t buffer_number=0,max_buffers_created=0;
+__xdata uint8_t buffer_number=0,max_buffers_created=0,infinite_loop_counter=0,functions_entered_counter=0;
 __xdata uint32_t characters_count=0;
 uint8_t* buffer_temp_ptr;
+void xdata* heap;
 //sentences
 __xdata uint8_t Welcome_txt[] = "\n\rMonish Nene ESD Spring 2018 Lab 3";
 __xdata uint8_t size_buffer_txt_0[] = "\n\rEnter the size for buffer 0 and buffer 1";
