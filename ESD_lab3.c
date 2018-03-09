@@ -6,8 +6,6 @@
  */
 
 #include "main.h"
-#define HEAP_SIZE (0x4000)   // size must be smaller than available XRAM
-void xdata* heap;
 
 _sdcc_external_startup()
 {
@@ -15,6 +13,41 @@ _sdcc_external_startup()
 return 0;
 }
 
+/***********************************************************************
+ * @brief functions_entered_count()
+ * This function keeps the count of functions entered for DEBUG PORT LOGIC
+ * @return modified value of functions_entered_counter
+ ***********************************************************************/
+uint8_t functions_entered_count(void)
+{
+    if(functions_entered_counter==0xFF)
+    {
+        functions_entered_counter = 0x80;
+    }
+    else
+    {
+        functions_entered_counter++;
+    }
+    return functions_entered_counter;
+}
+
+/***********************************************************************
+ * @brief infinite_loop_count()
+ * This function keeps the count of iterations in main infinite loop for DEBUG PORT LOGIC
+ * @return modified value of infinite_loop_counter
+ ***********************************************************************/
+uint8_t infinite_loop_count(void)
+{
+    if(infinite_loop_counter==0x7F)
+    {
+        infinite_loop_counter = 0x00;
+    }
+    else
+    {
+        infinite_loop_counter++;
+    }
+    return infinite_loop_counter;
+}
 
 /***********************************************************************
  * @brief buffer_init()
@@ -25,6 +58,7 @@ return 0;
  ***********************************************************************/
 Buffer_status buffer_init(buffer_typedef* cbptr, __xdata uint16_t length)
 {
+    DEBUGPORT(functions_entered_count());
 	(cbptr->buffptr) = (uint8_t*)malloc(length);
 	if(cbptr->buffptr == NULL)
 	{
@@ -40,11 +74,12 @@ Buffer_status buffer_init(buffer_typedef* cbptr, __xdata uint16_t length)
  * @brief buffer_add_item()
  * This function adds an item to buffer
  * @param (buffer)* cbptr pointer to buffer struct
- * @param data value to be stored in buffer
+ * @param data1 value to be stored in buffer
  * @return error in form of enum defined in main.h
  ***********************************************************************/
 Buffer_status buffer_add_item(buffer_typedef* cbptr,__xdata uint8_t data1)
 {
+    DEBUGPORT(functions_entered_count())
 	__xdata uint8_t i = buffer_end_reached(cbptr);
 	if(i == Buffer_Full)
 		{return Buffer_Full;}
@@ -67,9 +102,13 @@ Buffer_status buffer_add_item(buffer_typedef* cbptr,__xdata uint8_t data1)
  ***********************************************************************/
 Buffer_status buffer_remove_item(buffer_typedef* cbptr, uint8_t* store)
 {
+    DEBUGPORT(functions_entered_count())
 	uint8_t i=buffer_end_reached(cbptr);
 	if(i == Buffer_Full)
-		{return Buffer_Empty;}
+		{
+		    *store=0;
+		    return Buffer_Empty;
+        }
 	else
 	{
 		//(cbptr->count)--;
@@ -86,12 +125,13 @@ Buffer_status buffer_remove_item(buffer_typedef* cbptr, uint8_t* store)
  * @return error in form of enum defined in main.h
  ***********************************************************************/
 Buffer_status buffer_end_reached(buffer_typedef* cbptr)
-	{
-	if((cbptr->buffptr)==(cbptr->end)+1)
-		return Buffer_Full;
-	else
-		return Success;
-	}
+{
+    DEBUGPORT(functions_entered_count())
+    if((cbptr->buffptr)==(cbptr->end)+1)
+        return Buffer_Full;
+    else
+        return Success;
+}
 
 /***********************************************************************
  * @brief buffer_destroy()
@@ -101,6 +141,7 @@ Buffer_status buffer_end_reached(buffer_typedef* cbptr)
  ***********************************************************************/
 Buffer_status buffer_destroy(buffer_typedef* cbptr)
 {
+    DEBUGPORT(functions_entered_count())
 	free(cbptr->buffptr);
 	cbptr->buffptr = NULL;
 	return Success;
@@ -114,6 +155,7 @@ Buffer_status buffer_destroy(buffer_typedef* cbptr)
  ***********************************************************************/
 uint8_t getchar (void)
 {
+    DEBUGPORT(functions_entered_count())
 //	char cc;
     while (!RI);                // compare asm code generated for these three lines
     //while ((SCON & 0x01) == 0);  // wait for character to be received, spin on RI
@@ -130,9 +172,10 @@ uint8_t getchar (void)
  ***********************************************************************/
 void putchar (__xdata uint8_t c)
 {
-while(!TI); //wait for transmitter to be ready
-SBUF = c; //write character to transmit buffer
-TI = 0; //clear the TI flag
+    DEBUGPORT(functions_entered_count())
+    while(!TI); //wait for transmitter to be ready
+    SBUF = c; //write character to transmit buffer
+    TI = 0; //clear the TI flag
 }
 
 
@@ -143,6 +186,7 @@ TI = 0; //clear the TI flag
  ***********************************************************************/
 Buffer_status buffer_create(void)
 {
+    DEBUGPORT(functions_entered_count())
 	__xdata static uint16_t buffer_size=0;
 	__xdata uint8_t i=0;
 	Buffer_status error_check = 0;
@@ -216,6 +260,7 @@ Buffer_status buffer_create(void)
  ***********************************************************************/
 Buffer_status buffer_delete(__xdata uint8_t buffer_number)
 {
+    DEBUGPORT(functions_entered_count())
 	Buffer_status error_check = 0;
 	error_check = buffer_destroy(&buffer_storage[buffer_number]);
 	if(error_check==Success)
@@ -235,15 +280,22 @@ Buffer_status buffer_delete(__xdata uint8_t buffer_number)
  ***********************************************************************/
 Buffer_status buffer_flush(__xdata uint8_t buffer_number)
 {
-	Buffer_status error_check = 0;
+    DEBUGPORT(functions_entered_count())
+	Buffer_status error_check = 0,i=0;
 	__xdata uint8_t temp_storage=0;
 	buffer_structure_ptr = &buffer_storage[buffer_number];
 	buffer_temp_ptr = buffer_structure_ptr->buffptr;
 	buffer_structure_ptr->buffptr = buffer_structure_ptr->start;
 	do
 	{
-		error_check=buffer_remove_item(&buffer_storage[buffer_number],&temp_storage);
-		putchar(temp_storage);
+	    print_number((uint16_t)buffer_storage[buffer_number].buffptr);
+	    putchar(':');
+	    for(i=0;i<16;i++)
+		{
+		    putchar(20);//space
+            error_check=buffer_remove_item(&buffer_storage[buffer_number],&temp_storage);
+            print_number(temp_storage);
+		}
 	}while(error_check!=Buffer_Empty);
  	buffer_structure_ptr->buffptr = buffer_temp_ptr;
 	return error_check;
@@ -257,6 +309,7 @@ Buffer_status buffer_flush(__xdata uint8_t buffer_number)
  ***********************************************************************/
 void my_printf(__xdata uint8_t* text_ptr)
 {
+     DEBUGPORT(functions_entered_count())
 	__xdata uint8_t i=0;
 	while(*(text_ptr+i)!='\0')
 	{
@@ -274,6 +327,7 @@ void my_printf(__xdata uint8_t* text_ptr)
  ***********************************************************************/
 void print_number(__xdata uint32_t number)
 {
+     DEBUGPORT(functions_entered_count())
 	__xdata uint8_t temp_ascii_store[10];
 	__xdata int8_t counter=0;
 	do
@@ -297,6 +351,7 @@ void print_number(__xdata uint32_t number)
 ***********************************************************************/
 uint16_t fetch_number(void)
 {
+    DEBUGPORT(functions_entered_count())
 	__xdata uint8_t scanned_digit=0,digit_array[10],digit_counter=0,i=0;
 	__xdata uint16_t number=0;
 	while(scanned_digit!='\r')
@@ -363,6 +418,7 @@ void main(void)
 		my_printf(buffer_instructions_txt);
 		do
 		{
+		    DEBUGPORT(infinite_loop_count())
 			key_pressed=getchar();
 			characters_count++;
 			switch(key_pressed)
@@ -399,6 +455,7 @@ void main(void)
 							my_printf(bytes_txt);
 						}
 					}while(buffer_number!=0);
+                    buffer_flush(0);
 					my_printf(buffer_query_txt);
 					print_number(characters_count);
 					characters_count=0;
