@@ -1,89 +1,89 @@
-def selection_sort(original,n)
+def selection_sort(original,n):
     return result
 
-def insertion_sort(original,n)
+def insertion_sort(original,n):
     return result
 
-def binary_insertion_sort(original,n)
+def binary_insertion_sort(original,n):
     return result
 
-def merge_sort(original,n)
+def merge_sort(original,n):
     return result
 
-def quick_lr_sort(original,n)
+def quick_lr_sort(original,n):
     return result
 
-def quick_ll_sort(original,n)
+def quick_ll_sort(original,n):
     return result
 
-def quick_ternary_lr_sort(original,n)
+def quick_ternary_lr_sort(original,n):
     return result
 
-def quick_ternary_ll_sort(original,n)
+def quick_ternary_ll_sort(original,n):
     return result
 
-def quick_dual_pivot_sort(original,n)
+def quick_dual_pivot_sort(original,n):
     return result
 
-def bubble_sort(original,n)
+def bubble_sort(original,n):
     return result
 
-def cocktail_shatter_sort(original,n)
+def cocktail_shatter_sort(original,n):
     return result
 
-def gnome_sort(original,n)
+def gnome_sort(original,n):
     return result
 
-def gravity_sort(original,n)
+def gravity_sort(original,n):
     return result
 
-def shell_sort(original,n)
+def shell_sort(original,n):
     return result
 
-def comb_sort(original,n)
+def comb_sort(original,n):
     return result
 
-def heap_sort(original,n)
+def heap_sort(original,n):
     return result
 
-def smooth_sort(original,n)
+def smooth_sort(original,n):
     return result
 
-def odd_even_sort(original,n)
+def odd_even_sort(original,n):
     return result
 
-def bitonic_sort(original,n)
+def bitonic_sort(original,n):
     return result
 
-def cycle_sort(original,n)
+def cycle_sort(original,n):
     return result
 
-def radix_msd_sort(original,n)
+def radix_msd_sort(original,n):
     return result
 
-def radix_lsd_sort(original,n)
+def radix_lsd_sort(original,n):
     return result
 
-def std_gcc_sort(original,n)
+def std_gcc_sort(original,n):
     return result
 
-def std_gcc_stable_sort(original,n)
+def std_gcc_stable_sort(original,n):
     return result
 
-def tim_sort(original,n)
+def tim_sort(original,n):
     return result
 
-def block_merge_sort(original,n)
+def block_merge_sort(original,n):
     return result
 
-def cocktail_merge_sort(original,n)
+def cocktail_merge_sort(original,n):
     return result
 
-def flash_sort(original,n)
+def flash_sort(original,n):
     return result
 
-def pancake_sort(original,n)
+def pancake_sort(original,n):
     return result
 
-def hybrid_sort(original,n)
+def hybrid_sort(original,n):
     return result

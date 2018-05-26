@@ -1,4 +1,5 @@
 import random
+from File_operations import  write_to_file
 def random_array_generator_function(n):    
     a=[]
     b=0
@@ -10,8 +11,5 @@ def random_array_generator_function(n):
                 condition = False
         if condition:
             a.append(b)
-    file = open("random_numbers_array.txt", "w")
-    file.write(str(n))
-    file.write(str(a))
-    file.close
+    write_to_file("random_numbers_array.txt", a)
     return a
