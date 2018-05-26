@@ -1,2 +1,0 @@
-	reverse: reverse.c
-	arm-linux-gnueabihf-gcc	-o	reversebbb	reverse.c
