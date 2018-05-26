@@ -1,100 +1,130 @@
 
-def selection_sort(original,n):
+def selection_sort(data,n):
     for i in range(0,n):
         min_value = i
         for j in range(i,n):
-            if original[j] < original[min_value]:
+            if data[j] < data[min_value]:
                 min_value = j
-        original[i],original[min_value]= original[min_value],original[i]
-    return original
+        data[i],data[min_value]= data[min_value],data[i]
+    print("Data sorted by selection sort")
+    return data
 
 
-def insertion_sort(original,n):
-    return original
+def insertion_sort(data,n):
+    print("Data sorted by insertion sort")
+    return data
 
-def binary_insertion_sort(original,n):
-    return original
+def binary_insertion_sort(data,n):
+    print("Data sorted by binary insertion sort")
+    return data
 
-def merge_sort(original,n):
-    return original
+def merge_sort(data,n):
+    print("Data sorted by merge sort")
+    return data
 
-def quick_lr_sort(original,n):
-    return original
+def quick_lr_sort(data,n):
+    print("Data sorted by quick lr sort")
+    return data
 
-def quick_ll_sort(original,n):
-    return original
+def quick_ll_sort(data,n):
+    print("Data sorted by quick ll sort")
+    return data
 
-def quick_ternary_lr_sort(original,n):
-    return original
+def quick_ternary_lr_sort(data,n):
+    print("Data sorted by quick ternary lr sort")
+    return data
 
-def quick_ternary_ll_sort(original,n):
-    return original
+def quick_ternary_ll_sort(data,n):
+    print("Data sorted by quick ternary ll sort")
+    return data
 
-def quick_dual_pivot_sort(original,n):
-    return original
+def quick_dual_pivot_sort(data,n):
+    print("Data sorted by quick dual pivot sort")
+    return data
 
-def bubble_sort(original,n):
-    return original
+def bubble_sort(data,n):
+    print("Data sorted by bubble sort")
+    return data
 
-def cocktail_shatter_sort(original,n):
-    return original
+def cocktail_shatter_sort(data,n):
+    print("Data sorted by cocktail shatter sort")
+    return data
 
-def gnome_sort(original,n):
-    return original
+def gnome_sort(data,n):
+    print("Data sorted by gnome sort")
+    return data
 
-def gravity_sort(original,n):
-    return original
+def gravity_sort(data,n):
+    print("Data sorted by gravity sort")
+    return data
 
-def shell_sort(original,n):
-    return original
+def shell_sort(data,n):
+    print("Data sorted by shell sort")
+    return data
 
-def comb_sort(original,n):
-    return original
+def comb_sort(data,n):
+    print("Data sorted by comb sort")
+    return data
 
-def heap_sort(original,n):
-    return original
+def heap_sort(data,n):
+    print("Data sorted by heap sort")
+    return data
 
-def smooth_sort(original,n):
-    return original
+def smooth_sort(data,n):
+    print("Data sorted by smooth sort")
+    return data
 
-def odd_even_sort(original,n):
-    return original
+def odd_even_sort(data,n):
+    print("Data sorted by odd even sort")
+    return data
 
-def bitonic_sort(original,n):
-    return original
+def bitonic_sort(data,n):
+    print("Data sorted by bitonic sort")
+    return data
 
-def cycle_sort(original,n):
-    return original
+def cycle_sort(data,n):
+    print("Data sorted by cycle sort")
+    return data
 
-def radix_msd_sort(original,n):
-    return original
+def radix_msd_sort(data,n):
+    print("Data sorted by radix msd sort")
+    return data
 
-def radix_lsd_sort(original,n):
-    return original
+def radix_lsd_sort(data,n):
+    print("Data sorted by radix lsd sort")
+    return data
 
-def std_gcc_sort(original,n):
-    return original
+def std_gcc_sort(data,n):
+    print("Data sorted by std gcc sort")
+    return data
 
-def std_gcc_stable_sort(original,n):
-    return original
+def std_gcc_stable_sort(data,n):
+    print("Data sorted by std gcc stable sort")
+    return data
 
-def tim_sort(original,n):
-    return original
+def tim_sort(data,n):
+    print("Data sorted by tim sort")
+    return data
 
-def block_merge_sort(original,n):
-    return original
+def block_merge_sort(data,n):
+    print("Data sorted by block merge sort")
+    return data
 
-def cocktail_merge_sort(original,n):
-    return original
+def cocktail_merge_sort(data,n):
+    print("Data sorted by cocktail merge sort")
+    return data
 
-def flash_sort(original,n):
-    return original
+def flash_sort(data,n):
+    print("Data sorted by flash sort")
+    return data
 
-def pancake_sort(original,n):
-    return original
+def pancake_sort(data,n):
+    print("Data sorted by pancake sort")
+    return data
 
-def hybrid_sort(original,n):
-    return original
+def hybrid_sort(data,n):
+    print("Data sorted by hybrid sort")
+    return data
 
 algorithm_names_dict={'selection': selection_sort,
                       'pancake': pancake_sort,
@@ -134,11 +164,11 @@ algorithm_names_dict={'selection': selection_sort,
                       }
 
 
-def algorithm_selection(algorithm_command,original,n):
+def algorithm_selection(algorithm_command,data,n):
     try:
         algorithm = algorithm_names_dict[algorithm_command]
     except:
         print("Invalid Sorting Algorithm")
         return None
-    return algorithm(original,n)
+    return algorithm(data,n)
 
