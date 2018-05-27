@@ -1,7 +1,7 @@
 def Binary_Search_Array(x,data):
     n = len(data)
     if n == 1 or n == 2:
-        if x == data[0]:
+        if x <= data[0]:
             location = 0
         else:
             location = 1
