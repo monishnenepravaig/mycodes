@@ -54,6 +54,10 @@ def quick_dual_pivot_sort(data,n):
     return data
 
 def bubble_sort(data,n):
+    for i in range(0,n-1):
+        for j in range(0,n-i-1):
+            if data[j] > data[j+1]:
+                data[j],data[j+1]= data[j+1],data[j]
     print("Data sorted by bubble sort")
     return data
 
