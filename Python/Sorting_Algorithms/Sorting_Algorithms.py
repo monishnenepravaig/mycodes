@@ -13,12 +13,15 @@ def selection_sort(data,n):
 def insertion_sort(data,n):
     for i in range(1,n):
         temp_value = data[i]
-        for j in range(i,0):
+        condition = True
+        j = i
+        while (condition and j>0):
             if data[j-1] > temp_value:
                 data[j] = data[j-1]
+                j-=1
             else:
-                data[j] = temp_value
-                break
+                condition = False
+        data[j] = temp_value
     print("Data sorted by insertion sort")
     return data
 

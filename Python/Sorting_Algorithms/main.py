@@ -13,7 +13,7 @@ while condition:
     if data:
         condition = False
 for i in range(0,n-1):
-    if data[i]>data[i+1]:
+    if data[i]>=data[i+1]:
         flag = False
 print(data)
 if flag:
