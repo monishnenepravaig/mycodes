@@ -1,6 +1,7 @@
 from Random_Array_Generator import random_array_generator_function
 from Sorting_Algorithms import *
 from File_operations import *
+from Binary_Search import *
 print("Generate an array of n random numbers (0 to n-1)")
 n=int(input("Enter n "))
 data = random_array_generator_function(n)
@@ -9,7 +10,7 @@ condition = True
 flag = True
 while condition:
     sorting_algorithm=input("Which Sorting Algorithm do you want to use? ");
-    data = algorithm_selection(sorting_algorithm,data,n)
+    data = algorithm_selection(sorting_algorithm,data)
     if data:
         condition = False
 for i in range(0,n-1):
