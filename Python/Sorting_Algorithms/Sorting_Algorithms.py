@@ -71,24 +71,28 @@ def merge_sort(data):
             counter_merge += 1
         return data
 
-def quick_lr_sort(data): 
-    n = len(data) 
-    return data
-
-def quick_ll_sort(data): 
-    n = len(data) 
-    return data
-
-def quick_ternary_lr_sort(data): 
-    n = len(data) 
-    return data
-
-def quick_ternary_ll_sort(data): 
-    n = len(data) 
-    return data
-
-def quick_dual_pivot_sort(data): 
-    n = len(data) 
+def quick_sort(data):
+    n = len(data)
+    if n == 1 or n == 0:
+        return data
+    elif n == 2:
+        if data[0] > data[1]:
+            data[0],data[1] = data[1],data[0]
+        return data
+    pivot = data[n-1]
+    wall_location = 0
+    for j in range(0,n-1):
+        if data[j] < pivot:
+            data[j],data[wall_location]=data[wall_location],data[j]
+            wall_location += 1
+    j = n-1
+    while (j>wall_location):
+        data[j] = data[j-1]
+        j-=1
+    data[wall_location]= pivot
+    if n > 2: 
+        data[:wall_location]=quick_sort(data[:wall_location])
+        data[wall_location+1:]=quick_sort(data[wall_location+1:])
     return data
 
 def bubble_sort(data): 
@@ -181,12 +185,10 @@ def hybrid_sort(data):
 
 algorithm_names_dict={'selection': selection_sort,
                       'pancake': pancake_sort,
-                      'quick_lr': quick_lr_sort,
+                      'quick': quick_sort,
                       'block_merge': block_merge_sort,
                       'block' : block_merge_sort,
-                      'quick_dual_pivot': quick_dual_pivot_sort,
                       'insertion': insertion_sort,
-                      'quick_ll': quick_ll_sort,
                       'binary_insertion': binary_insertion_sort,
                       'radix_lsd': radix_lsd_sort,
                       'radix' : radix_lsd_sort,
@@ -207,13 +209,10 @@ algorithm_names_dict={'selection': selection_sort,
                       'cocktail_merge': cocktail_merge_sort,
                       'comb': comb_sort,
                       'cycle': cycle_sort,
-                      'quick_ternary_lr': quick_ternary_lr_sort,
                       'gnome': gnome_sort,
                       'bitonic': bitonic_sort,
                       'smooth': smooth_sort,
-                      'merge': merge_sort,
-                      'quick_ternary_ll': quick_ternary_ll_sort,
-                      'quick': quick_lr_sort
+                      'merge': merge_sort
                       }
 
 
