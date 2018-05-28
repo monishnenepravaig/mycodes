@@ -3,6 +3,8 @@ def Binary_Search_Array(x,data):
     if n == 1 or n == 2:
         if x <= data[0]:
             location = 0
+        elif x >= data[n-1]:
+            location = n
         else:
             location = 1
         return location

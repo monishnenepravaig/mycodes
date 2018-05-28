@@ -1,7 +1,6 @@
 from Random_Array_Generator import random_array_generator_function
 from Sorting_Algorithms import *
 from File_operations import *
-from Binary_Search import *
 print("Generate an array of n random numbers (0 to n-1)")
 n=int(input("Enter n "))
 data = random_array_generator_function(n)

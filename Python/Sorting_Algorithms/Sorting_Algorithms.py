@@ -1,4 +1,6 @@
 
+from Binary_Search import *
+
 def selection_sort(data): 
     n = len(data) 
     for i in range(0,n):
@@ -28,7 +30,15 @@ def insertion_sort(data):
     return data
 
 def binary_insertion_sort(data): 
-    n = len(data) 
+    n = len(data)
+    for i in range(1,n):
+        temp_value = data[i]
+        location = Binary_Search_Array(temp_value,data[:i])
+        j = i
+        while (j>location):
+            data[j] = data[j-1]
+            j-=1
+        data[location] = temp_value
     print("Data sorted by binary insertion sort")
     return data
 
