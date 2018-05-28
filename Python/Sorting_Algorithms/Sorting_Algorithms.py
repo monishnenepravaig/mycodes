@@ -103,8 +103,19 @@ def bubble_sort(data):
                 data[j],data[j+1]= data[j+1],data[j]
     return data
 
-def cocktail_shatter_sort(data): 
-    n = len(data) 
+def cocktail_shaker_sort(data): 
+    n = len(data)
+    bottom = 0
+    top = n-1
+    for i in range(0,n-1):   
+            for j in range(bottom,top):
+                if data[j] > data[j+1]:
+                    data[j],data[j+1]= data[j+1],data[j]
+            top -= 1
+            for k in range(top,bottom,-1):
+                if data[k] < data[k-1]:
+                    data[k],data[k-1]= data[k-1],data[k]
+            bottom += 1
     return data
 
 def gnome_sort(data): 
@@ -200,8 +211,8 @@ algorithm_names_dict={'selection': selection_sort,
                       'hybrid': hybrid_sort,
                       'gravity': gravity_sort,
                       'tim': tim_sort,
-                      'cocktail_shatter': cocktail_shatter_sort,
-                      'cocktail': cocktail_shatter_sort,
+                      'cocktail_shaker': cocktail_shaker_sort,
+                      'cocktail': cocktail_shaker_sort,
                       'bubble': bubble_sort,
                       'shell': shell_sort,
                       'odd_even': odd_even_sort,
