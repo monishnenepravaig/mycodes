@@ -9,9 +9,7 @@ def selection_sort(data):
             if data[j] < data[min_value]:
                 min_value = j
         data[i],data[min_value]= data[min_value],data[i]
-    print("Data sorted by selection sort")
     return data
-
 
 def insertion_sort(data): 
     n = len(data) 
@@ -26,7 +24,6 @@ def insertion_sort(data):
             else:
                 condition = False
         data[j] = temp_value
-    print("Data sorted by insertion sort")
     return data
 
 def binary_insertion_sort(data): 
@@ -39,37 +36,59 @@ def binary_insertion_sort(data):
             data[j] = data[j-1]
             j-=1
         data[location] = temp_value
-    print("Data sorted by binary insertion sort")
     return data
 
-def merge_sort(data): 
-    n = len(data) 
-    print("Data sorted by merge sort")
-    return data
+def merge_sort(data):
+    n = len(data)
+    if n == 1:
+        return data
+    elif n == 2:
+        if data[0] > data[1]:
+            data[0],data[1] = data[1],data[0]
+        return data
+    else:
+        data_1 = merge_sort(data[:int(n/2)])
+        data_2 = merge_sort(data[int(n/2):])
+        n_1 = len(data_1)
+        n_2 = len(data_2)
+        counter_1=0
+        counter_2=0
+        counter_merge=0
+        while(counter_1 < n_1 or counter_2 < n_2):
+            if counter_1 < n_1 and counter_2 < n_2:
+                if data_1[counter_1] < data_2[counter_2]:
+                    data[counter_merge] = data_1[counter_1]
+                    counter_1 += 1
+                else:
+                    data[counter_merge] = data_2[counter_2]
+                    counter_2 += 1
+            elif counter_1 < n_1:
+                data[counter_merge] = data_1[counter_1]
+                counter_1 += 1
+            else:
+                data[counter_merge] = data_2[counter_2]
+                counter_2 += 1
+            counter_merge += 1
+        return data
 
 def quick_lr_sort(data): 
     n = len(data) 
-    print("Data sorted by quick lr sort")
     return data
 
 def quick_ll_sort(data): 
     n = len(data) 
-    print("Data sorted by quick ll sort")
     return data
 
 def quick_ternary_lr_sort(data): 
     n = len(data) 
-    print("Data sorted by quick ternary lr sort")
     return data
 
 def quick_ternary_ll_sort(data): 
     n = len(data) 
-    print("Data sorted by quick ternary ll sort")
     return data
 
 def quick_dual_pivot_sort(data): 
     n = len(data) 
-    print("Data sorted by quick dual pivot sort")
     return data
 
 def bubble_sort(data): 
@@ -78,107 +97,86 @@ def bubble_sort(data):
         for j in range(0,n-i-1):
             if data[j] > data[j+1]:
                 data[j],data[j+1]= data[j+1],data[j]
-    print("Data sorted by bubble sort")
     return data
 
 def cocktail_shatter_sort(data): 
     n = len(data) 
-    print("Data sorted by cocktail shatter sort")
     return data
 
 def gnome_sort(data): 
     n = len(data) 
-    print("Data sorted by gnome sort")
     return data
 
 def gravity_sort(data): 
     n = len(data) 
-    print("Data sorted by gravity sort")
     return data
 
 def shell_sort(data): 
     n = len(data) 
-    print("Data sorted by shell sort")
     return data
 
 def comb_sort(data): 
     n = len(data) 
-    print("Data sorted by comb sort")
     return data
 
 def heap_sort(data): 
     n = len(data) 
-    print("Data sorted by heap sort")
     return data
 
 def smooth_sort(data): 
     n = len(data) 
-    print("Data sorted by smooth sort")
     return data
 
 def odd_even_sort(data): 
     n = len(data) 
-    print("Data sorted by odd even sort")
     return data
 
 def bitonic_sort(data): 
     n = len(data) 
-    print("Data sorted by bitonic sort")
     return data
 
 def cycle_sort(data): 
     n = len(data) 
-    print("Data sorted by cycle sort")
     return data
 
 def radix_msd_sort(data): 
     n = len(data) 
-    print("Data sorted by radix msd sort")
     return data
 
 def radix_lsd_sort(data): 
     n = len(data) 
-    print("Data sorted by radix lsd sort")
     return data
 
 def std_gcc_sort(data): 
     n = len(data) 
-    print("Data sorted by std gcc sort")
     return data
 
 def std_gcc_stable_sort(data): 
     n = len(data) 
-    print("Data sorted by std gcc stable sort")
     return data
 
 def tim_sort(data): 
     n = len(data) 
-    print("Data sorted by tim sort")
     return data
 
 def block_merge_sort(data): 
     n = len(data) 
-    print("Data sorted by block merge sort")
     return data
 
 def cocktail_merge_sort(data): 
     n = len(data) 
-    print("Data sorted by cocktail merge sort")
     return data
 
 def flash_sort(data):
     n = len(data)
-    print("Data sorted by flash sort")
     return data
 
 def pancake_sort(data): 
     n = len(data) 
-    print("Data sorted by pancake sort")
     return data
 
 def hybrid_sort(data): 
     n = len(data) 
-    print("Data sorted by hybrid sort")
     return data
 
 algorithm_names_dict={'selection': selection_sort,
@@ -222,6 +220,7 @@ algorithm_names_dict={'selection': selection_sort,
 def algorithm_selection(algorithm_command,data):
     try:
         algorithm = algorithm_names_dict[algorithm_command]
+        print("Data sorted by",algorithm_command,"sort")
     except:
         print("Invalid Sorting Algorithm")
         return None
