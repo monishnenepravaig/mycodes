@@ -122,8 +122,36 @@ def gnome_sort(data):
     n = len(data) 
     return data
 
-def gravity_sort(data): 
-    n = len(data) 
+def gravity_sort(data):
+    n = len(data)
+    i = 0
+    j = 0
+    temp_data=[]
+    temp = 1
+    bottom = 0
+    for i in range(0,n):
+            if data[i] == 0:
+                bottom += 1
+    while temp>0:
+        temp = 0
+        for i in range(0,n):
+            if data[i] > 0:
+                temp += 1
+                data[i] -= 1
+        else:
+            temp_data.append(temp)
+    j = 0
+    i = 0
+    while temp_data[j] > 0:
+        while temp_data[j] > 0:
+            data[i] += 1
+            temp_data[j] -= 1
+            i -= 1
+        j += 1
+        i = n-1
+    data[bottom]+=1
+    for i in range(0,bottom):
+        data[i] = 0
     return data
 
 def shell_sort(data): 
