@@ -181,13 +181,26 @@ def bitonic_sort(data):
 def cycle_sort(data): 
     n = len(data) 
     return data
-
+    
 def radix_msd_sort(data): 
     n = len(data) 
     return data
 
 def radix_lsd_sort(data): 
-    n = len(data) 
+    n = len(data)
+    max_number = 0
+    digits_in_max = 0
+    divisor = 1
+    modulous = 10
+    for i in range(0,n):
+        if data[i] > max_number:
+            max_number = data[i]
+    condition = True
+    while condition:
+        digits_in_max += 1
+        max_number /= 10
+        if max_number < 10:
+            condition = false
     return data
 
 def std_gcc_sort(data): 
