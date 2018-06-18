@@ -4,6 +4,8 @@ condition = True
 points_for = dict_from_file("letter_score")
 while(condition):
     word = input("Enter next word ")
+    if word == '':
+        break
     lower_word = word.lower()
     if word.isalpha()== False:
         print("Invalid Input")
