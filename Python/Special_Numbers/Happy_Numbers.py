@@ -1,4 +1,5 @@
-print("Ugly Numbers -> Numbers with only -1, 2, 3 and 5 as prime factors.")
+from Number_Operations import digits
+print("Happy Numbers -> Repeated sum of squares of digits = 1")
 condition = True
 while(condition):
     string = input("Enter next number to be checked ")
@@ -9,19 +10,20 @@ while(condition):
     except:
         print("Invalid Input")
         continue
-    if number < 0:
-        temp = -1 * number
+    while (number != 1) and (number != 4) and (number != 0): 
+        factors = digits(number)
+        number = 0
+        for i in factors:
+            number += i*i
+            print(" +",i,"^2")
+        print(" = ",number)
+        if (number == 1) or (number == 4):
+            break
+    if number == 1:
+        print(number,"is a happy number.")
     else:
-        temp = number
-    while (temp % 2 == 0) and ( temp >= 2 ):
-        temp /= 2
-    while (temp % 3 == 0) and ( temp >= 3 ):
-        temp /= 3
-    while (temp % 5 == 0) and ( temp >= 5 ):
-        temp /= 5
-    if temp == 1 or temp == 0 :
-        print(number,"is an ugly number.")
-    else:
-        print(number,"is a beautiful number.")
-print("Ugly numbers Code Ended")
+        print(number,"is a sad number.")
+print("Happy numbers Code Ended")
+
+
 

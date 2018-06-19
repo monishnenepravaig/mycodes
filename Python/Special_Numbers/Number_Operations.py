@@ -30,8 +30,18 @@ def divisors(number):
             factors.append(i)
     return factors
 
+def digits(number):
+    digits=[]
+    if number < 0:
+        number = -1 * number
+    while(number > 9):
+        digits.append(number%10)
+        number = number // 10
+    digits.append(number)
+    return digits
+
 if __name__ == "__main__":
-    print("Prime factors.")
+    print("Test Code.")
     condition = True
     while(condition):
         string = input("Enter next number to be checked ")
@@ -42,7 +52,7 @@ if __name__ == "__main__":
         except:
             print("Invalid Input")
             continue
-        factors = prime_factors(number)
-        print("The prime factors for the number ",number," are ",factors)
-    print("Prime Factors Code Ended")
+        factors = digits(number)
+        print("The digits for the number ",number," are ",factors)
+    print("Test Code Ended")
 
