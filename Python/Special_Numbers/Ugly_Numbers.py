@@ -1,4 +1,4 @@
-from Prime_Factors import prime_factors
+from Number_Operations import prime_factors
 print("Ugly Numbers -> Numbers with only -1, 2, 3 and 5 as prime factors.")
 condition = True
 while(condition):

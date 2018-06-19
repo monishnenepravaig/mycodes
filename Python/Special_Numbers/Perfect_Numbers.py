@@ -1,4 +1,7 @@
-print("Ugly Numbers -> Numbers with only -1, 2, 3 and 5 as prime factors.")
+from Number_Operations import divisors
+print("Deficient Numbers -> Sum of divisors < Number.")
+print("Perfect Numbers -> Sum of divisors = Number.")
+print("Abundant Numbers -> Sum of divisors > Number.")
 condition = True
 while(condition):
     string = input("Enter next number to be checked ")
@@ -9,19 +12,20 @@ while(condition):
     except:
         print("Invalid Input")
         continue
-    if number < 0:
-        temp = -1 * number
+    if(number < 0):
+        print("Invalid Input")
+        continue
+    factors = divisors(number)
+    print("The divisors for the number ",number," are ",factors)
+    sum = 0
+    for i in factors:
+        sum += i
+    print("The sum of it's divsors is ",sum)
+    if sum < number:
+        print(number,"is a deficient number as ",sum," < ",number)
+    elif sum == number:
+        print(number,"is a perfect number as ",sum," = ",number)
     else:
-        temp = number
-    while (temp % 2 == 0) and ( temp >= 2 ):
-        temp /= 2
-    while (temp % 3 == 0) and ( temp >= 3 ):
-        temp /= 3
-    while (temp % 5 == 0) and ( temp >= 5 ):
-        temp /= 5
-    if temp == 1 or temp == 0 :
-        print(number,"is an ugly number.")
-    else:
-        print(number,"is a beautiful number.")
-print("Ugly numbers Code Ended")
+        print(number,"is an abundant number as ",sum," > ",number)
+print("Code Ended.")
 

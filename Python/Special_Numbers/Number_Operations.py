@@ -16,6 +16,20 @@ def prime_factors(number):
             count += 1
     return factors
 
+def divisors(number):
+    factors=[]
+    count=2
+    if number == 0:
+        factors.append(0)
+        return factors
+    elif number < 0:
+        factors.append(-1)
+        number = -1 * number
+    for i in range(1,number):
+        if number % i == 0:
+            factors.append(i)
+    return factors
+
 if __name__ == "__main__":
     print("Prime factors.")
     condition = True
