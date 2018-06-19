@@ -1,7 +1,7 @@
-print("Ugly Numbers")
+print("Ugly Numbers -> Numbers with only -1, 2, 3 and 5 as prime factors.")
 condition = True
 while(condition):
-    string = input("Enter next number ")
+    string = input("Enter next number to be checked ")
     if string == "":
         break
     try:
