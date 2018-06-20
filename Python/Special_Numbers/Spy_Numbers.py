@@ -1,7 +1,7 @@
-print("Ugly Numbers -> Numbers with only -1, 2, 3 and 5 as prime factors.")
-condition = True
-while(condition):
-    string = input("Enter next number to be checked ")
+from Number_Operations import digits
+print("Spy Numbers -> A number whose sum of cube of digits = number")
+while True:
+    string = input("Enter a range upto which you want the Spy numbers ")
     if string == "":
         break
     try:
@@ -9,19 +9,17 @@ while(condition):
     except:
         print("Invalid Input")
         continue
-    if number < 0:
-        temp = -1 * number
-    else:
-        temp = number
-    while (temp % 2 == 0) and ( temp >= 2 ):
-        temp /= 2
-    while (temp % 3 == 0) and ( temp >= 3 ):
-        temp /= 3
-    while (temp % 5 == 0) and ( temp >= 5 ):
-        temp /= 5
-    if temp == 1 or temp == 0 :
-        print(number,"is an ugly number.")
-    else:
-        print(number,"is a beautiful number.")
-print("Ugly numbers Code Ended")
+    print("Spy numbers upto",number,"are:")
+    for i in range(0,number+1):
+        sum = 0
+        product = 1 
+        split = digits(i)
+        for j in split:
+            sum += j
+            product *= j
+        if product == sum:
+            print(i)
+print("Spy numbers Code Ended")
+
+
 
