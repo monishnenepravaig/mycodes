@@ -1,7 +1,7 @@
-print("Ugly Numbers -> Numbers with only -1, 2, 3 and 5 as prime factors.")
-condition = True
-while(condition):
-    string = input("Enter next number to be checked ")
+from Number_Operations import digits
+print("Automorphic Numbers -> A number whose square ends with the number itself")
+while True:
+    string = input("Enter a range upto which you want the automorphic numbers ")
     if string == "":
         break
     try:
@@ -9,19 +9,15 @@ while(condition):
     except:
         print("Invalid Input")
         continue
-    if number < 0:
-        temp = -1 * number
-    else:
-        temp = number
-    while (temp % 2 == 0) and ( temp >= 2 ):
-        temp /= 2
-    while (temp % 3 == 0) and ( temp >= 3 ):
-        temp /= 3
-    while (temp % 5 == 0) and ( temp >= 5 ):
-        temp /= 5
-    if temp == 1 or temp == 0 :
-        print(number,"is an ugly number.")
-    else:
-        print(number,"is a beautiful number.")
-print("Ugly numbers Code Ended")
-
+    print("Automorphic numbers upto",number,"are:")
+    for i in range(0,number+1):
+        condition = True
+        split = digits(i)
+        square_split = digits(i*i)
+        length = len(split)
+        for j in range(0,length):
+            if split[j] != square_split[j]:
+                condition = False
+        if condition:
+            print(i)
+print("Automorphic numbers Code Ended")
