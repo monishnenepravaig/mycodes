@@ -16,6 +16,20 @@ def prime_factors(number):
             count += 1
     return factors
 
+def average(numbers):
+    sum = 0
+    length = len(numbers)
+    for i in numbers:
+        sum += i
+    average = sum/length
+    return average
+
+#def square_root(number):
+    
+
+#def cube_root(number):
+    
+
 def divisors(number):
     factors=[]
     count=2
@@ -40,21 +54,32 @@ def digits(number):
     digits.append(number)
     return digits
 
-def HCF(a,b):
-    common_factors=[]
-    factors_a = divisors(a)
-    factors_b = divisors(b)
-    for i in factors_a:
-        if i in factors_b:
-            common_factors.append(i)
-    HCF = common_factors[-1]
+def HCF(numbers):
+    HCF = 0
+    if min(numbers) <= 0:
+        return HCF
+    for i in range(1,min(numbers)+1):
+        divisible = True
+        for j in numbers:
+            if j % i != 0:
+                divisible = False
+        if divisible:
+            HCF = i
     return HCF
 
-def LCM(a,b):
-    common_factors=[]
-    d = HCF(a,b)
-    LCM = int( a * b / d )
-    return LCM
+def LCM(numbers):
+    if min(numbers) <= 0:
+        return 0
+    product = 1
+    for i in numbers:
+        product *= i
+    for i in range(1,product+1):
+        divisible = True
+        for j in numbers:
+            if i % j != 0:
+                divisible = False
+        if divisible:
+            return i
         
 if __name__ == "__main__":
     print("Test Code.")
@@ -76,7 +101,6 @@ if __name__ == "__main__":
         except:
             print("Invalid Input")
             continue
-        c = LCM(a,b)
-        print("The LCM of numbers ",a," and ",b," is ",c)
+        print("The LCM of numbers ",a," and ",b," is ")
     print("Test Code Ended")
 
