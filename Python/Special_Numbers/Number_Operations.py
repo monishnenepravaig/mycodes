@@ -24,12 +24,32 @@ def average(numbers):
     average = sum/length
     return average
 
-#def square_root(number):
-    
-
-#def cube_root(number):
-    
-
+def root(number,n):
+    low = 0
+    if n <= 0 :
+        return 0
+    negative = False
+    if( number < 0 ):
+        if n % 2 == 0:
+            return 0
+        else:
+            number *= -1
+            negative = True
+    high = number
+    while True:
+        midpoint = average([low,high])
+        power = 1
+        for i in range(0,n):
+            power *= midpoint
+        if number > round(power,6):
+            low = midpoint
+        elif number < round(power,6):
+            high = midpoint
+        else :
+            if negative:
+                midpoint *= -1
+            return round(midpoint,6)
+            
 def divisors(number):
     factors=[]
     count=2
