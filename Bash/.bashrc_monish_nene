@@ -56,17 +56,22 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+parse_git_branch()
+{
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${MONISH}\[\033[01;32m\]\u@\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+    PS1="${monish}\[\033[01;32m\]\u@\[\033[00m\]:\[\033[01;34m\]\W\[\033[31m\]\$(parse_git_branch)\[\033[00m\] $ "
 else
-    PS1='${MONISH}\u@:\W\$ '
+    PS1="${monish}\u@:\W\$(parse_git_branch)\ $ "
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${MONISH}\u@: \W\a\]$PS1"
+    PS1="\[\e]0;${monish}\u: \W\a\]$PS1"
     ;;
 *)
     ;;
@@ -115,3 +120,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
