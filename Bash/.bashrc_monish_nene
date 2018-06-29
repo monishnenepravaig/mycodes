@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=1000000
+HISTFILESIZE=20000000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -81,7 +81,6 @@ L_CYAN="\[\033[01;36m\]"
 WHITE="\[\033[01;37m\]"
 SMILEY="${WHITE}:)${NORMAL}"
 FROWNY="${RED}:(${NORMAL}"
-SELECT="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
 KERNEL="${YELLOW}\h "
 USER="${L_GREEN}\u@"
 COLON="${NORMAL}:"
@@ -89,6 +88,15 @@ L_PATH="${L_BLUE}\w"
 S_PATH="${L_BLUE}\W"
 GIT_BRANCH="${L_RED}\$(parse_git_branch)"
 END="${NORMAL} $ "
+
+feedback()
+{
+	if [ \$? = 0 ]; then 
+		echo ${SMILEY} 
+	else 
+		echo ${FROWNY} 
+	fi
+}
 
 if [ "$color_prompt" = yes ]; then
     PS1="${RESET}${KERNEL}${USER}${COLON}${S_PATH}${GIT_BRANCH}${END}"
@@ -125,13 +133,20 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias lo="ls -o"
+alias lh="ls -lh"
+alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
+# You may want to put all your additions into a separate file lik
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
@@ -149,6 +164,28 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+extract () { # extract files. Ignore files with improper extensions.
+    local x
+    ee() { # echo and execute
+        echo "$@"
+        $1 "$2"
+    }
+    for x in "$@"; do
+        [[ -f $x ]] || continue
+        case "$x" in
+            *.tar.bz2 | *.tbz2 )    ee "tar xvjf" "$x"  ;;
+            *.tar.gz | *.tgz ) ee "tar xvzf" "$x"   ;;
+            *.bz2 )             ee "bunzip2" "$x"   ;;
+            *.rar )             ee "unrar x" "$x"   ;;
+            *.gz )              ee "gunzip" "$x"    ;;
+            *.tar )             ee "tar xvf" "$x"   ;;
+            *.zip )             ee "unzip" "$x"     ;;
+            *.Z )               ee "uncompress" "$x" ;;
+            *.7z )              ee "7z x" "$x"      ;;
+        esac
+    done
+}
 
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
