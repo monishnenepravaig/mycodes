@@ -64,6 +64,21 @@ def divisors(number):
             factors.append(i)
     return factors
 
+def factorial(number):
+    if number == 0:
+        return 1
+    status = 1
+    number = int(number)
+    if number < 0:
+        status = -1
+    return number*factorial(number-status)
+
+def permutation(n,r):
+    return int(factorial(n)/factorial(n-r))
+
+def combination(n,r):
+    return int(factorial(n)/(factorial(n-r)*factorial(r)))
+
 def digits(number):
     digits=[]
     if number < 0:
