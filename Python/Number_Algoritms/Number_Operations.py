@@ -16,6 +16,12 @@ def prime_factors(number):
             count += 1
     return factors
 
+def power(number,n):
+    result = 1
+    for i in range(0,n):
+        result *= number
+    return result
+
 def average(numbers):
     sum = 0
     length = len(numbers)
@@ -23,6 +29,15 @@ def average(numbers):
         sum += i
     average = sum/length
     return average
+
+def count_of_1(number):
+    count = 0
+    while number != 0:
+        value = number & 1
+        if value == 1:
+            count+=1
+        number = number>>1
+    return count
 
 def root(number,n):
     low = 0
