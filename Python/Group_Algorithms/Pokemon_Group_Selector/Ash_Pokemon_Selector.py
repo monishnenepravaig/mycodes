@@ -61,7 +61,11 @@ if __name__ == "__main__":
         shuffle(groups)
         print("Random Group of 6 pokemons for ash's next battle\n",groups)
         key_pressed = input("Press any key for next group of 6 pokemons and Press Return to exit\n")
-        seed(power(ord(key_pressed),randint(0,n))/10000)
-        if key_pressed == '':
-            break
+        try:
+            seed(power(ord(key_pressed),randint(0,n))/10000)
+        except:
+            if key_pressed == '':
+                break
+            seed(power(ord(key_pressed[0]),randint(0,n))/10000)
+        
     
