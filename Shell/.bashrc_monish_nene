@@ -68,20 +68,26 @@ git_user_name()
 
 git_password()
 {
-	echo lol
+	echo replace_with_your_git_Password
 }
 
 git_push()
 {
 	git add *
-	git commit -m "$1 $2 $3"
-	git push origin parse_git_branch
+	git commit -m "$1 $2 $3 $4 $5"
+	git push origin $parse_git_branch
+	$git_user_name
+	$git_password
 }
 
 git_pull()
 {
-	git fetch origin	
-	git pull origin parse_git_branch
+	git fetch origin
+	$git_user_name
+	$git_password	
+	git pull origin $parse_git_branch
+	$git_user_name
+	$git_password
 }
 
 RESET="\[\017\]"
