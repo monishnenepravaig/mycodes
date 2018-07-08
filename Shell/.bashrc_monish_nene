@@ -61,33 +61,22 @@ parse_git_branch()
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-git_user_name()
-{
-	echo monishnene
-}
-
-git_password()
-{
-	echo replace_with_your_git_Password
-}
-
 git_push()
 {
 	git add *
 	git commit -m "$1 $2 $3 $4 $5"
 	git push origin $parse_git_branch
-	$git_user_name
-	$git_password
+}
+
+git_password()
+{
+	git config credential.helper 'cache --timeout=86400'
 }
 
 git_pull()
 {
 	git fetch origin
-	$git_user_name
-	$git_password	
 	git pull origin $parse_git_branch
-	$git_user_name
-	$git_password
 }
 
 RESET="\[\017\]"
@@ -172,6 +161,7 @@ alias .....="cd ../../../.."
 alias +x="find ${pwd} -type f -iname '*.sh' -exec chmod +x {} \;"
 alias push="git_push"
 alias pull="git_pull"
+alias password="git_password"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
