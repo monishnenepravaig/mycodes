@@ -1,16 +1,9 @@
-j=0
-array=''
-filtered_array=''
-while [ $j -lt 20 ]
+array=()
+while read a;
 do
-    read a
-    if [[ "${a}" == *a* ]];then
-    array=$(echo $array $a)
-    elif [[ "${a}" == *A* ]];then
-    array=$(echo $array $a)
-    else
-    filtered_array=$(echo $filtered_array $a)
-    ((j++))
+    if [[ "${a}" != *a* ]] &&  [[ "${a}" != *A* ]];
+    then
+        array+=("$a")
     fi
 done
-echo $filtered_array
+echo ${array[*]}
