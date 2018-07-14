@@ -1,9 +1,6 @@
-j=0
-array=''
-while [ $j -lt 20 ]
+array=()
+while read a;
 do
-    read a
-    array=$(echo $array $a)
-    ((j++))
+    array+=("$a")
 done
-echo $array|  cut -f 4 -d' '
+echo ${array[@]:3:1}
