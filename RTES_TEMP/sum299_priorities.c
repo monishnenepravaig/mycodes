@@ -3,6 +3,13 @@
 #include <pthread.h>
 #include <stdint.h>
 
+
+pthread_t thread_1,thread_2,thread_3;
+
+pthread_attr_t attribute_1, attribute_2, attribute_3 ;
+
+struct sched_param parameter_1, parameter_2, parameter_3;
+
 void* add_100_numbers (void* ptr)
 {
 uint16_t* ptr_2 = (uint16_t*) ptr;
@@ -18,11 +25,6 @@ return (void *)ptr_2+200;
 
 void main()
 {
-pthread_t thread_1,thread_2,thread_3;
-
-pthread_attr_t attribute_1, attribute_2, attribute_3 ;
-
-struct sched_param parameter_1, parameter_2, parameter_3;
 
 uint16_t array_1[101],array_2[101],array_3[101],counter=0;
 uint8_t i=0,ret_1=0,ret_2=0,ret_3=0,rc=0;

@@ -53,7 +53,7 @@ void main()
 
 	result = *((uint16_t*)sum_1)+*((uint16_t*)sum_2)+*((uint16_t*)sum_3);
 
-        clock_gettime(CLOCK_REALTIME, &rtclk_stop_time);
+        clock_gettime(CLOCK_REALTIME, &current_time);
 
-        syslog(LOG_CRIT, "The sum of numbers from 0 to 299 is %d @ current_time.tv_sec %d, current_time.tv_usec %d\n", result, current_time.tv_sec, current_time.tv_usec);
+        syslog(LOG_CRIT, "The sum of numbers from 0 to 299 is %d @ current_time.tv_sec %d, current_time.tv_usec %d\n", result, current_time.tv_sec, current_time.tv_nsec);
 }
