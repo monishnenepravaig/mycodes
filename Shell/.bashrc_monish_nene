@@ -79,6 +79,13 @@ git_pull()
 	git pull origin $parse_git_branch
 }
 
+up()
+{
+	sudo apt-get update
+	sudo apt-get upgrade
+}
+
+
 RESET="\[\017\]"
 NORMAL="\[\033[00m\]"
 BLACK="\[\033[0;30m\]"
