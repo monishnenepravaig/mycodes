@@ -35,3 +35,13 @@ r'^([a-z])(\w)(\s)(\W)(\d)(\D)([A-Z])([a-zA-Z])([aeiouAEIOU])(\S)\1\2\3\4\5\6\7\
 
 '/^(?|(-)|(---)|(:)|(\.))\1$/'; // check for any of these groups (?|regex)
 
+^(\\2tic|(tac))+$ // detect tactactic forward reference
+
+o(?=oo) // detects ooo positive lookaheado(?=oo)
+
+"(\\S)(?!\\1)") //detects 3 repeated characters negative lookahead (?!)
+
+"(?<=[\\w])[13579]" // positive look behind odd digit followed by all occurences of digit
+
+"(?<![aeiouAEIOU])(\\s|\\S)" // negative look behind match occurences of characters which are not immediately preceded by vowels
+
