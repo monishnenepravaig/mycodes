@@ -1,0 +1,47 @@
+
+r"Monish"	# match Monish
+
+r"...\....\....\...."	# . matches anything \. matches .
+
+r"^...\....$"	# start and end of the string or same length
+
+r"\d\d\D\d\d\D\d\d\d\d"	# \d digits \D non digits
+
+r"\S\S\s\S\S\s\S\S"	# \s white space \S non white space
+
+r"\w\w\w\W\w\w\w"	#\w word character \W non word character
+
+r'[123]'	# match a charater with any of the characters inside[]
+
+r'[^123]'	# match a charater with any of the characters other than inside[^]
+
+r'[a-z][A-Z][0-9][l-p][B-R]' # match a charater in the range inside []
+
+r'[13579]{5}$'	# match no. of repititions in {}
+
+r'^\d{1,2}[A-Z]{3,}\.{,3}$'# match with repetitions in{} {lowerlimit,upperlimit} both inclusive or {lowerlimit,} or {,upperlimit}
+
+r'[A-z]*'	# * matches 0 or more repetitions
+
+r'[A-Z]+'	# + matches 1 or more repetitions
+
+r'^(Mr|Mrs|Ms|Dr|Er)\.[A-Za-z]+$'	# (Mr|Mrs|Ms|Dr|Er) matches either of these 
+
+r'\b[AEIOUaeiou][A-Za-z]*\b'	# \b matches word boundary
+
+r'(ok){3,}'	# () lets us operate on exact phrase
+
+r'^([a-z])(\w)(\s)(\W)(\d)(\D)([A-Z])([a-zA-Z])([aeiouAEIOU])(\S)\1\2\3\4\5\6\7\8\9\10'	# \1 \2 etc match group no. captured
+
+'/^(?|(-)|(---)|(:)|(\.))\1$/'; // check for any of these groups (?|regex)
+
+^(\\2tic|(tac))+$ // detect tactactic forward reference
+
+o(?=oo) // detects ooo positive lookaheado(?=oo)
+
+"(\\S)(?!\\1)") //detects 3 repeated characters negative lookahead (?!)
+
+"(?<=[\\w])[13579]" // positive look behind odd digit followed by all occurences of digit
+
+"(?<![aeiouAEIOU])(\\s|\\S)" // negative look behind match occurences of characters which are not immediately preceded by vowels
+
