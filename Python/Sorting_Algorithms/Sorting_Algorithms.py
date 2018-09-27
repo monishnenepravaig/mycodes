@@ -1,6 +1,41 @@
 
 from Binary_Search import *
 
+from random import getrandbits
+
+def merge_shuffle(data):
+    n = len(data)
+    if n == 1:
+        return data
+    elif n == 2:
+        if getrandbits(1):
+            data[0],data[1] = data[1],data[0]
+        return data
+    else:
+        data_1 = shuffleArray(data[:int(n/2)])
+        data_2 = shuffleArray(data[int(n/2):])
+        n_1 = len(data_1)
+        n_2 = len(data_2)
+        counter_1=0
+        counter_2=0
+        counter_merge=0
+        while(counter_1 < n_1 or counter_2 < n_2):
+            if counter_1 < n_1 and counter_2 < n_2:
+                if getrandbits(1):
+                    data[counter_merge] = data_1[counter_1]
+                    counter_1 += 1
+                else:
+                    data[counter_merge] = data_2[counter_2]
+                    counter_2 += 1
+            elif counter_1 < n_1:
+                data[counter_merge] = data_1[counter_1]
+                counter_1 += 1
+            else:
+                data[counter_merge] = data_2[counter_2]
+                counter_2 += 1
+            counter_merge += 1
+        return data
+
 def selection_sort(data): 
     n = len(data) 
     for i in range(0,n):
