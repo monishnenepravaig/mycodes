@@ -36,6 +36,25 @@ int* rotLeft(int a_count, int* a, int d, int* result_count)
     return a;
 }
 
+void countSwaps(int a_count, int* a)
+{
+    int count=0,i=0,j=0,temp=0;
+    for(i=0;i<a_count;i++)
+    {
+        for(j=i;j<a_count;j++)
+        {
+            if(*(a+i)>*(a+j))
+            {
+                temp=*(a+i);
+                *(a+i)=*(a+j);
+                *(a+j)=temp;
+                count++;
+            }
+        }
+    }
+    printf("Array is sorted in %d swaps.\nFirst Element: %d\nLast Element: %d",count,*(a),*(a+a_count-1));
+}
+
 int hourglassSum(int arr_rows, int arr_columns, int** arr)
 {
     int sum=0,max_sum=0x80000001,row=0,column=0;
@@ -154,4 +173,26 @@ char* twoStrings(char* s1, char* s2)
         s2++;
     }
     return no;
+}
+
+void merge_sort(int count,int* data)
+{
+    int temp=0,middle=count/2;
+    if((count==1)||(count==0))
+    {
+        return;
+    }
+    if(count==2)
+    {
+        if(*(data) > *(data+1))
+        {
+            temp=*(data);
+            *(data)=*(data+1);
+            *(data+1)=temp;
+        }
+        return;
+    }
+    merge_sort(middle,data);
+    merge_sort(count-middle,*(data+middle));
+    return;
 }
