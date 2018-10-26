@@ -175,9 +175,10 @@ char* twoStrings(char* s1, char* s2)
     return no;
 }
 
-void merge_sort(int count,int* data)
+void merge_sort(int32_t count,int32_t* data)
 {
-    int temp=0,middle=count/2;
+    int32_t temp=0,middle=count/2,i=0,j=0,temp_counter=0;
+    int32_t* temp_ptr = (int32_t*)malloc(count*4);
     if((count==1)||(count==0))
     {
         return;
@@ -193,6 +194,54 @@ void merge_sort(int count,int* data)
         return;
     }
     merge_sort(middle,data);
-    merge_sort(count-middle,*(data+middle));
+    merge_sort(count-middle,data+middle);
+    j=middle;
+    while(temp_counter<count)
+    {
+    if(j>=count)
+    {
+        *(temp_ptr+temp_counter++)=*(data+i);
+        i++;
+    }
+    else if(i>=middle)
+    {
+        *(temp_ptr+temp_counter++)=*(data+j);
+        j++;
+    }
+    else if((*(data+i)<*(data+j)))
+    {
+        *(temp_ptr+temp_counter++)=*(data+i);
+        i++;
+    }
+    else
+    {
+        *(temp_ptr+temp_counter++)=*(data+j);
+        j++;
+    }
+    }
+    temp_counter=0;
+    while(temp_counter<count)
+    {
+    *(data+temp_counter)=*(temp_ptr+temp_counter);
+        temp_counter++;
+    }
+    free(temp_ptr);
     return;
 }
+
+// Complete the maximumToys function below.
+int maximumToys(int prices_count, int* prices, int k)
+{
+    int i=0,sum=0;
+    merge_sort(prices_count,prices);
+    for(i=0;i<prices_count;i++)
+    {
+        sum+=*(prices+i);
+        if(sum>k)
+        {
+            break;
+        }
+    }
+    return i;
+}
+
