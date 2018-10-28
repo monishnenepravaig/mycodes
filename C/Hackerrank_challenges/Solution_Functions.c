@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+//138511468548
 char* readline();
 char** split_string(char*);
 
@@ -34,6 +34,161 @@ int* rotLeft(int a_count, int* a, int d, int* result_count)
     }
     *result_count=a_count;
     return a;
+}
+
+// Complete the repeatedString function below.
+long repeatedString(char* s, long n)
+{
+    long total=0,quo=0;
+    int count=0,len=strlen(s),i=0,a[len],rem=0;
+    for(i=0;i<len;i++)
+    {
+        if(*(s+i)=='a')
+        {
+            count++;
+        }
+        a[i]=count;
+    }
+    quo=n/len;
+    rem=n%len;
+    if(count==0)
+    {
+        return count;
+    }
+    if(rem>0)
+    {
+        total=count*quo+a[rem-1];
+    }
+    else
+    {
+        total=count*quo;
+    }
+    return total;
+}
+
+int fibonacci(int n)
+{
+    if(memory[n]>=0)
+    {
+        return memory[n];
+    }
+    memory[n]=fibonacci(n-1)+fibonacci(n-2);
+    return memory[n];
+}
+
+// Complete the jumpingOnClouds function below.
+int jumpingOnClouds(int c_count, int* c)
+{
+    int jumps=0,i=0;
+    for(i=0;i<c_count;i++)
+    {
+        if(*(c+i+2)==0)
+        {
+            i++;
+        }
+        jumps++;
+    }
+    jumps--;
+    return jumps;
+}
+
+// Complete the countingValleys function below.
+int countingValleys(int n, char* s)
+{
+    int valleys=0,level=0,min_level=0;
+    while(*s!=0)
+    {
+        if(*s=='U')
+        {
+            level++;
+        }
+        else if(*s=='D')
+        {
+            level--;
+        }
+        if(min_level>level)
+        {
+            min_level=level;
+        }
+        if((level>min_level)&&(level==0))
+        {
+            min_level=level;
+            valleys++;
+        }
+        s++;
+    }
+    return valleys;
+}
+
+// Complete the sockMerchant function below.
+int sockMerchant(int n, int ar_count, int* ar)
+{
+    int pairs=0,prev=0;
+    merge_sort(ar_count,ar);
+    while(*ar!=0)
+    {
+        if(prev==*ar)
+        {
+            pairs++;
+            prev=0;
+        }
+        else
+        {
+            prev=*ar;
+        }
+        ar++;
+    }
+    return pairs;
+}
+
+// Complete the alternatingCharacters function below.
+int alternatingCharacters(char* s)
+{
+    int deletions=0;
+    uint8_t prev=0;
+    while(*s!=0)
+    {
+        if(prev==*s)
+        {
+            deletions++;
+        }
+        else
+        {
+            prev=*s;
+        }
+        s++;
+    }
+    return deletions;
+}
+
+// Complete the makeAnagram function below.
+int makeAnagram(char* a, char* b)
+{
+    int i=0,j=0,deletions=0;
+    int len_a=strlen(a);
+    int len_b=strlen(b);
+    merge_sort(len_a,a);
+    merge_sort(len_b,b);
+    while((*(a+i)!=0)&&(*(b+j)!=0))
+    {
+        if(*(a+i)==*(b+j))
+        {
+            i++;
+            j++;
+        }
+        else if(*(a+i)<*(b+j))
+        {
+            i++;
+            deletions++;
+        }
+        else if(*(a+i)>*(b+j))
+        {
+            j++;
+            deletions++;
+        }
+    }
+    deletions+=(len_a-i)+(len_b-j);
+    return deletions;
 }
 
 void countSwaps(int a_count, int* a)
@@ -99,6 +254,41 @@ char* primality(int n)
         i++;
     }
     return p;
+}
+
+// Complete the luckBalance function below.
+int luckBalance(int k, int contests_rows, int contests_columns, int** contests)
+{
+    int i=0,luck=0,lost=0,count=0;
+    int lowest[contests_rows];
+    for(i=0;i<contests_rows;i++)
+    {
+        lowest[i]=-1;
+    }
+    for(i=0;i<contests_rows;i++)
+    {
+        if(*(*(contests+i)+1)==0)
+        {
+            luck+=*(*(contests+i));
+        }
+        else if ((*(*(contests+i)+1)==1))
+        {
+            lowest[count++]=*(*(contests+i));
+        }
+    }
+    merge_sort(count,lowest);
+    for(i=0;i<count;i++)
+    {
+        if(i<k)
+        {
+            luck+=lowest[i];
+        }
+        else
+        {
+            luck-=lowest[i];
+        }
+    }
+    return luck;
 }
 
 void checkMagazine(int magazine_count, char** magazine, int note_count, char** note)
