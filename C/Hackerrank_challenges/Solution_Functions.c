@@ -435,3 +435,134 @@ int maximumToys(int prices_count, int* prices, int k)
     return i;
 }
 
+int getHeight(struct node* root)
+{
+    int rh=0,lh=0;
+    if((root->right==NULL)&&(root->left==NULL))
+    {
+        return 0;
+    }
+    else if(root->right==NULL)
+    {
+        return 1+getHeight(root->left);
+    }
+    else if(root->left==NULL)
+    {
+        return 1+getHeight(root->right);
+    }
+    rh=1+getHeight(root->right);
+    lh=1+getHeight(root->left);
+    if(rh>lh)
+    {
+        return rh;
+    }
+    else
+    {
+        return lh;
+    }
+}
+
+struct node *lca( struct node *root, int v1, int v2 )
+{
+    if(((v1<root->data)&&(v2>root->data))||((v1>root->data)&&(v2<root->data)))
+    {
+        return root;
+    }
+    else if(v1<root->data)
+    {
+        return lca(root->left,v1,v2);
+    }
+    else if(v1>root->data)
+    {
+        return lca(root->right,v1,v2);
+    }
+    return root;
+}
+
+DoublyLinkedListNode* sortedInsert(DoublyLinkedListNode* head, int data)
+{
+    DoublyLinkedListNode* head_ptr=head;
+    DoublyLinkedListNode* temp_ptr;
+    DoublyLinkedListNode* New_node=(DoublyLinkedListNode*)malloc(sizeof(DoublyLinkedListNode));
+    while(data>head->data)
+    {
+        if(head->next!=NULL)
+        {
+            head=head->next;
+        }
+        else
+        {
+            head->next=New_node;
+            New_node->prev=head;
+            New_node->next=NULL;
+            New_node->data=data;
+            return head_ptr;
+        }
+    }
+    if(head->prev!=NULL)
+    {
+        head->prev->next=New_node;
+        New_node->prev=head->prev;
+    }
+    else
+    {
+        head_ptr=New_node;
+        New_node->prev=NULL;
+    }
+    head->prev=New_node;
+    New_node->next=head;
+    New_node->data=data;
+    return head_ptr;
+}
+
+DoublyLinkedListNode* reverse(DoublyLinkedListNode* head)
+{
+    DoublyLinkedListNode* current_ptr=head;
+    DoublyLinkedListNode* next_ptr;
+    while(current_ptr->next!=NULL)
+    {
+        next_ptr=current_ptr->next;
+        current_ptr->next=current_ptr->prev;
+        current_ptr->prev=next_ptr;
+        current_ptr=next_ptr;
+    }
+    next_ptr=current_ptr->next;
+    current_ptr->next=current_ptr->prev;
+    current_ptr->prev=next_ptr;
+    return current_ptr;
+}
+
+int findMergeNode(SinglyLinkedListNode* head1, SinglyLinkedListNode* head2)
+{
+    int found=0;
+    SinglyLinkedListNode* checker=head1;
+    while(head2!=NULL)
+    {
+        while(checker!=NULL)
+        {
+            if(head2==checker)
+            {
+                return checker->data;
+            }
+            checker=checker->next;
+        }
+        checker=head1;
+        head2=head2->next;
+    }
+    return checker->data;
+}
+
+bool has_cycle(Node* head)
+{
+    int count=0;
+    while(head!=NULL)
+    {
+        if(count>101)
+        {
+            return 1;
+        }
+        count++;
+        head=head->next;
+    }
+    return 0;
+}
