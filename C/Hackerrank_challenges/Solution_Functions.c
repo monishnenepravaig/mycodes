@@ -566,3 +566,38 @@ bool has_cycle(Node* head)
     }
     return 0;
 }
+
+bool checkBST(Node* root)
+    {
+        Node* temp;
+		if((root->right==NULL)&&(root->left==NULL))
+        {
+            return 1;
+        }
+        else if(checkBST(root->right)&&checkBST(root->left))
+        {
+            temp=root->left;
+            while(temp!=NULL)
+            {
+                if(temp->data>=root->data)
+                {
+                    return 0;
+                }
+                temp=temp->right;
+            }
+            temp=root->right;
+            while(temp!=NULL)
+            {
+                if(temp->data<=root->data)
+                {
+                    return 0;
+                }
+                temp=temp->left;
+            }
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+	}
