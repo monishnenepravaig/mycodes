@@ -601,3 +601,92 @@ bool checkBST(Node* root)
             return 0;
         }
 	}
+
+
+void decode_huff(node * root, string s)
+{
+    const uint8_t* str = reinterpret_cast<const uint8_t*>(s.c_str());
+    uint8_t final[100],condition=0,i=0,error=0;
+    uint8_t* final_ptr=final;
+    node* temp = root;
+    for(i=0;i<100;i++)
+    {
+        final[i]=0;
+    }
+    while((*str!=0)&&!(error))
+    {
+        temp = root;
+        condition=1;
+        while(condition)
+        {
+            if(*str=='1')
+            {
+                temp=temp->right;
+            }
+            else if(*str=='0')
+            {
+                temp=temp->left;
+            }
+            else
+            {
+                condition=0;
+                error=1;
+                printf("Error");
+            }
+            if(temp->right==NULL)
+            {
+                *final_ptr=temp->data;
+                condition=0;
+                final_ptr++;
+            }
+            str++;
+        }
+    }
+    printf("%s",final);
+}
+
+class Checker{
+public:
+  	// complete this method
+    static int comparator(Player a, Player b)
+    {
+        if(a.score>b.score)
+        {
+            return 1;
+        }
+        else if(a.score<b.score)
+        {
+            return -1;
+        }
+        else
+        {
+            if(a.name<b.name)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
+};
+
+// Complete the getMinimumCost function below.
+int getMinimumCost(int k, int c_count, int* c)
+{
+    int flower_counter=0,person_counter=0,i=0,price=0,prev=0;
+    merge_sort(c_count,c);
+    while(flower_counter<c_count)
+    {
+        person_counter=0;
+        while((person_counter<k)&&flower_counter<c_count)
+        {
+            price+=*(c+i++)*(1+prev);
+            flower_counter++;
+            person_counter++;
+        }
+        prev++;
+    }
+    return price;
+}
