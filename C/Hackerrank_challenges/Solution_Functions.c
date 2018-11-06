@@ -690,3 +690,31 @@ int getMinimumCost(int k, int c_count, int* c)
     }
     return price;
 }
+
+// Complete the stepPerms function below.
+int stepPerms(int n)
+{
+    int steps=0,i=0,dummy=0;
+    static int steps_mem[]={0,1,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    if(n<1)
+    {
+        return 0;
+    }
+    else if(steps_mem[n]!=0)
+    {
+        steps=steps_mem[n];
+    }
+    else
+    {
+        for(i=5;i<n;i++)
+        {
+            if(steps_mem[i]==0)
+            {
+                dummy=stepPerms(i);
+            }
+        }
+        steps=stepPerms(n-1)+stepPerms(n-2)+stepPerms(n-3);
+    }
+    steps_mem[n]=steps;
+    return steps;
+}
