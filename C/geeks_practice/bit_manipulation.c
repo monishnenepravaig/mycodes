@@ -1,9 +1,10 @@
-#define TESTCASES 8
-//#define COUNT_TEST (0)
-#define XOR_SUM (1)
-//#define XOR_SWAP (0)
 #include <stdint.h>
 #include <stdio.h>
+#define TESTCASES 8
+//#define COUNT_TEST (0)
+//#define XOR_SUM (0)
+//#define XOR_SWAP (0)
+#define SWAP_ODD_EVEN (1)
 
 uint8_t count_of_1(uint32_t number)
 {
@@ -17,6 +18,18 @@ uint8_t count_of_1(uint32_t number)
 		number=number>>1;
 	}
 	return count;
+}
+
+uint32_t swap_odd_even(uint32_t number)
+{
+	uint32_t odd=0,even=0,result=0;
+	uint32_t odd_mask=0xAAAA,even_mask=0x5555;
+	odd = odd_mask & number;
+	even = even_mask & number;
+	even = even << 1;
+	odd = odd >> 1;
+	result = odd | even;
+	return result;
 }
 
 uint32_t xor_equals_sum(uint32_t number)
@@ -63,6 +76,10 @@ void main()
 		#ifdef XOR_SUM
 			count = xor_equals_sum(samples[i]);
 			printf("test case = %x and result = %d\n",samples[i],count);
+		#endif
+		#ifdef SWAP_ODD_EVEN
+			count = swap_odd_even(samples[i]);
+			printf("test case = %x and result = %x\n",samples[i],count);
 		#endif
 	}	
 }
