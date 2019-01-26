@@ -30,6 +30,10 @@ element *remove_first( void )
 /* remove and return item from end of list. returns 0 (NULL pointer) if list is empty. */
 element *remove_last(void)
 {
+	if(first==NULL)
+	{
+		return first;
+	}
   	element *node = first;
 	if(node->next==NULL)
 	{
@@ -42,10 +46,7 @@ element *remove_last(void)
 		prev = node;
            	node = node->next;
        	}
-	if(prev!=NULL)
-	{	
-       		prev->next=NULL;
-	}
+       	prev->next=NULL;
    	return node;
 }
 
@@ -81,5 +82,6 @@ void main()
 		removed=remove_last();
 		printf("%d\t",*(uint32_t*)(removed->data));
 	}
+	removed=remove_last();
 	print_ll();
 }
