@@ -50,6 +50,29 @@ element *remove_last(void)
    	return node;
 }
 
+/* remove and return item from end of list. returns 0 (NULL pointer) if list is empty. */
+element *remove_node_matched(void)
+{
+	if(first==NULL)
+	{
+		return first;
+	}
+  	element *node = first;
+	if(node->next==NULL)
+	{
+		first=NULL;
+		return node;		
+	}
+   	element *prev = NULL;
+	while(node->next!=NULL)
+      	{
+		prev = node;
+           	node = node->next;
+       	}
+       	prev->next=NULL;
+   	return node;
+}
+
 void print_ll(void)
 {
     	element* node=first;
@@ -77,8 +100,7 @@ void main()
 	}
 	print_ll();
 	printf("\nstart removing\n");
-	for(i=0;i<SIZE;i++)
-	{
+
 		removed=remove_last();
 		printf("%d\t",*(uint32_t*)(removed->data));
 	}

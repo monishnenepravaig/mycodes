@@ -216,5 +216,15 @@ extract () { # extract files. Ignore files with improper extensions.
     done
 }
 
+dont_sleep()
+{
+	sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+}
+
+sleep_again()
+{
+	sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+}
+
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
