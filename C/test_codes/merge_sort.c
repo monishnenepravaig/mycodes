@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <time.h>
 #include <string.h>
 #define True 1
 #define False 0
@@ -17,7 +18,7 @@ void merge_sort(int32_t count,int32_t* data)
     }
     if(count==2)
     {
-        if(*(data) > *(data+1))
+        if(*(data) < *(data+1))
         {
             temp=*(data);
             *(data)=*(data+1);
@@ -40,7 +41,7 @@ void merge_sort(int32_t count,int32_t* data)
 		*(temp_ptr+temp_counter++)=*(data+j);
 		j++;
 	}
-	else if((*(data+i)<*(data+j)))
+	else if((*(data+i)>*(data+j)))
 	{
 		*(temp_ptr+temp_counter++)=*(data+i);
 		i++;
@@ -63,9 +64,15 @@ void merge_sort(int32_t count,int32_t* data)
 
 void main()
 {
-	uint32_t i=0,data[]={78,62,51,43,9,8,7,6,5,4};
-	merge_sort(10,data);
-	for(i=0;i<10;i++)
+	uint32_t i=0;
+	int32_t data[256];
+	srand(time(NULL));
+	for(i=0;i<256;i++)
+	{
+		data[i]=rand();
+	}
+	merge_sort(256,data);
+	for(i=0;i<256;i++)
 	{
 		printf("%d\n",data[i]);
 	}
