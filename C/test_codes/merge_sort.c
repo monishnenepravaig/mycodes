@@ -70,8 +70,9 @@ void cronlog(int32_t count,int32_t* data)
 	int32_t i=0;
 	pid_t process_id=getpid();
 	uid_t user_id=getuid();
-	system("date>>cronlog.txt");
-	sprintf(str,"Process Id = %d\nUser ID = %d\nSorted Data = [",process_id,user_id);
+	time_t t = time(NULL);
+	struct tm *time_and_date = localtime(&t);
+	sprintf(str,"Time & Date : %sProcess Id = %d\nUser ID = %d\nSorted Data = [",asctime(time_and_date),process_id,user_id);
 	FILE* fptr = fopen("cronlog.txt","a");
 	fwrite(str, 1, strlen(str), fptr);
 	for(i=0;i<count;i++)
@@ -96,5 +97,4 @@ void main()
 		data[i]=rand();
 	}
 	merge_sort(DATA_SIZE,data);
-	cronlog(DATA_SIZE,data);
 }
