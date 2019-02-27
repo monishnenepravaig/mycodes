@@ -1,0 +1,319 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <sstream>
+using namespace std;
+class Student
+{
+    int age=0,standard=0;
+    string first_name, last_name;
+    
+    public:
+    void set_age(int in_age);
+    void set_standard(int in_standard);
+    void set_first_name(string in_name);
+    void set_last_name(string in_name);
+    int get_age(void);
+    int get_standard(void);
+    string get_first_name(void);
+    string get_last_name(void);
+    string to_string(void);
+    void input(void);
+    int calculateTotalScore(void);
+};
+
+void Student::input(void)
+{
+    int new_score=0,i=0;
+    for(i=0;i<5;i++)
+    {
+        cin>>new_score;
+        score+=new_score;
+    }
+}
+
+int Student::calculateTotalScore(void)
+{
+    return score;
+}
+
+void Student::set_age(int in_age)
+    {
+        age=in_age;
+    }
+
+void Student::set_standard(int in_standard)
+    {
+        standard=in_standard;
+    }
+
+void Student::set_first_name(string in_name)
+    {
+        first_name=in_name;
+    }
+
+void Student::set_last_name(string in_name)
+    {
+        last_name=in_name;
+    }
+
+int Student::get_age(void)
+    {
+        return age;
+    }
+
+int Student:: get_standard(void)
+    {
+        return standard;
+    }
+
+string Student:: get_first_name(void)
+    {
+        return first_name;
+    }
+
+string Student::get_last_name(void)
+    {
+        return last_name;
+    }
+
+string Student::to_string(void)
+    {
+        ostringstream merged;
+        merged.str("");
+        merged<<age<<","<<first_name<<","<<last_name<<","<<standard;
+        return merged.str();
+    }
+
+
+int student_class_test() {
+    int age, standard;
+    string first_name, last_name;
+    
+    cin >> age >> first_name >> last_name >> standard;
+    
+    Student st;
+    st.set_age(age);
+    st.set_standard(standard);
+    st.set_first_name(first_name);
+    st.set_last_name(last_name);
+    
+    cout << st.get_age() << "\n";
+    cout << st.get_last_name() << ", " << st.get_first_name() << "\n";
+    cout << st.get_standard() << "\n";
+    cout << "\n";
+    cout << st.to_string();
+    
+    return 0;
+}
+
+
+int sample_input(void) 
+{
+    int a,b,c;
+    cin>>a>>b>>c;
+    cout<<a+b+c;
+    return 0;
+}
+
+int various_inputs(void) 
+{
+    int a;
+    long b;
+    char c;
+    float d;
+    double e;
+    cin>>a>>b>>c>>d>>e;
+    printf("%d\n%ld\n%c\n%f\n%lf",a,b,c,d,e);
+    return 0;
+}
+
+
+int switch_test(void)
+{
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    switch(n)
+    {
+        case 1:
+        {
+            cout<<"one";
+            break;
+        }
+        case 2:
+        {
+            cout<<"two";
+            break;
+        }
+        case 3:
+        {
+            cout<<"three";
+            break;
+        }
+        case 4:
+        {
+            cout<<"four";
+            break;
+        }
+        case 5:
+        {
+            cout<<"five";
+            break;
+        }
+        case 6:
+        {
+            cout<<"six";
+            break;
+        }
+        case 7:
+        {
+            cout<<"seven";
+            break;
+        }
+        case 8:
+        {
+            cout<<"eight";
+            break;
+        }
+        case 9:
+        {
+            cout<<"nine";
+            break;
+        }
+        default:
+        {
+            cout<<"Greater than 9";
+        }
+    }
+
+
+int switch_bore() 
+{
+    int n=0,start=0,stop=0;
+    cin>>start>>stop;
+    for(n=start;n<stop+1;n++)
+    {
+        if(n!=start)
+        {
+            cout<<"\n";
+        }
+        switch(n)
+        {
+            case 1:
+            {
+                cout<<"one";
+                break;
+            }
+            case 2:
+            {
+                cout<<"two";
+                break;
+            }
+            case 3:
+            {
+                cout<<"three";
+                break;
+            }
+            case 4:
+            {
+                cout<<"four";
+                break;
+            }
+            case 5:
+            {
+                cout<<"five";
+                break;
+            }
+            case 6:
+            {
+                cout<<"six";
+                break;
+            }
+            case 7:
+            {
+                cout<<"seven";
+                break;
+            }
+            case 8:
+            {
+                cout<<"eight";
+                break;
+            }
+            case 9:
+            {
+                cout<<"nine";
+                break;
+            }
+            default:
+            {
+                if(n%2)
+                {
+                    cout<<"odd";
+                }
+                else
+                {
+                    cout<<"even";
+                }
+            }
+        }
+
+    }
+    return 0;
+}
+
+int max_of_four(int a, int b, int c, int d)
+{
+    int n=a;
+    n=n>b?n:b;
+    n=n>c?n:c;
+    n=n>d?n:d;
+    return n;
+}
+
+void update(int *a,int *b)
+{
+    int A=*a;
+    int B=*b;
+    *(a)=A+B;
+    *(b)=A-B;
+    if(*(a)<0)
+    {
+        *(a)*=-1;
+    }
+    if(*(b)<0)
+    {
+        *(b)*=-1;
+    }
+}
+
+int double_array() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    long j=0,i=0,rows=0,queries=0,columns=0,row=0,column=0;
+    cin>>rows;
+    cin>>queries;
+    long* arrays[rows];
+    for(i=0;i<rows;i++)
+    {
+        cin>>columns;
+        arrays[i]=(long*)malloc(columns*sizeof(long*));
+        for(j=0;j<columns;j++)
+        {
+            cin>>*(arrays[i]+j);
+        }
+    }
+    for(i=0;i<queries;i++)
+    {
+        cin>>row;
+        cin>>column;
+        printf("%ld\n",*(arrays[row]+column));
+    }
+    for(i=0;i<rows;i++)
+    {
+        free(arrays[i]);
+    }
+    return 0;
+}
