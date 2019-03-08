@@ -11,6 +11,79 @@
 char* readline();
 char** split_string(char*);
 
+
+char* readline();
+uint8_t Yes[]="YES";
+uint8_t No[]="NO";
+
+
+char* isBalanced(char* s) 
+{
+    uint8_t stack[STACK_SIZE];
+    uint8_t temp=0;
+    int head=0,i=0;
+    while(*(s+i)!=0)
+    {
+        temp=*(s+i++);
+        switch(temp)
+        {
+            case '{':
+            {
+                *(stack+head++)=temp;
+                break;
+            }
+            case '(':
+            {
+                *(stack+head++)=temp;
+                break;
+            }
+            case '[':
+            {
+                *(stack+head++)=temp;
+                break;
+            }
+            case '}':
+            {
+                if(*(stack+(--head))!='{')
+                {
+                    printf("case 1\n");
+                    return No;
+                }
+                break;
+            }
+            case ']':
+            {
+                if(*(stack+(--head))!='[')
+                {
+                    printf("case 2\n");
+                    return No;
+                }
+                break;
+            }
+            case ')':
+            {
+                if(*(stack+(--head))!='(')
+                {
+                    printf("case 3\n");
+                    return No;
+                }
+                break;
+            }
+        }
+        if(head<0)
+        {
+            printf("case 5\n");
+            return No;
+        }
+    }
+    if(head>1)
+    {
+        printf("case 6\n");
+        return No;
+    }
+    return Yes;
+}
+
 uint8_t check_palindrome(uint8_t* str,int size)
 {
     int i=0;
