@@ -11,6 +11,65 @@
 char* readline();
 char** split_string(char*);
 
+uint8_t check_palindrome(uint8_t* str,int size)
+{
+    int i=0;
+    uint8_t x=*str;
+    for(i=0;i<size;i++)
+    {
+        printf("%c",*(str+i));
+    }
+    printf("\n");
+    for(i=0;i<size/2;i++)
+    {
+        if((x!=*(str+i))||(x!=*(str+size-i-1)))
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+long sum_factorial(int number)
+{
+    long sum=0;
+    int i=0;
+    for(i=0;i<number+1;i++)
+    {
+        sum+=i;
+    }
+    return sum;
+}
+
+// Complete the substrCount function below.
+long substrCount(int n, char* s) 
+{
+    int start=0,end=0,size=0,check=0,i=0;
+    uint8_t x=0;
+    long count=0;
+    for(start=0;start<n;start++)
+    {
+        x=*(s+start);
+        size=0;
+        check=0;
+        while(*(s+start+(++size))==x);
+        printf("size=%d\n",size);
+        count+=sum_factorial(size);
+        printf("n:count=%d\n",count);
+        for(i=0;i<size;i++)
+        {
+            check=check_palindrome(s+start+i,(size-i)*2+1);
+            if(check==1)
+            {
+                count+=1;
+                printf("p:count=%d\n",count);
+            }
+        }
+        start+=size-1;
+    }
+    return count;
+}
+
 int* rotLeft(int a_count, int* a, int d, int* result_count)
 {
     int j=0;
