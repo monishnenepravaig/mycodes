@@ -103,6 +103,63 @@ uint8_t check_palindrome(uint8_t* str,int size)
     return 1;
 }
 
+
+// Complete the maxMin function below.
+int maxMin(int k, int arr_count, int* arr) 
+{
+    int min_unfairness=0x7FFFFFFF;
+    int i=0,j=0,temp=0;
+    merge_sort(arr_count,arr);
+    for(i=0;i<arr_count-k+1;i++)
+    {
+        temp=*(arr+i+k-1)-*(arr+i);
+        if(temp<min_unfairness)
+        {
+            min_unfairness=temp;
+        }
+    }
+    return min_unfairness;
+}
+
+int main()
+{
+    FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
+
+    char* n_endptr;
+    char* n_str = readline();
+    int n = strtol(n_str, &n_endptr, 10);
+
+    if (n_endptr == n_str || *n_endptr != '\0') { exit(EXIT_FAILURE); }
+
+    char* k_endptr;
+    char* k_str = readline();
+    int k = strtol(k_str, &k_endptr, 10);
+
+    if (k_endptr == k_str || *k_endptr != '\0') { exit(EXIT_FAILURE); }
+
+    int* arr = malloc(n * sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        char* arr_item_endptr;
+        char* arr_item_str = readline();
+        int arr_item = strtol(arr_item_str, &arr_item_endptr, 10);
+
+        if (arr_item_endptr == arr_item_str || *arr_item_endptr != '\0') { exit(EXIT_FAILURE); }
+
+        *(arr + i) = arr_item;
+    }
+
+    int arr_count = n;
+
+    int result = maxMin(k, arr_count, arr);
+
+    fprintf(fptr, "%d\n", result);
+
+    fclose(fptr);
+
+    return 0;
+}
+
 long sum_factorial(int number)
 {
     long sum=0;
