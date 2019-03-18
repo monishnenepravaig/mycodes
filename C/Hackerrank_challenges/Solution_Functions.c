@@ -16,6 +16,31 @@ char* readline();
 uint8_t Yes[]="YES";
 uint8_t No[]="NO";
 
+// Complete the minimumSwaps function below.
+int minimumSwaps(int arr_count, int* arr) 
+{
+    int i=0,counter=0,index=0,saved=0,value=0,prev_index=0;
+    for(i=0;i<arr_count;i++)
+    {   
+        if(*(arr+i)!=i+1)
+        {
+            saved=i+1;
+            printf("saved=%d\n",saved);
+            index=i;
+            while(*(arr+index)!=saved)
+            {
+                value=index+1;
+                prev_index=index;
+                index=*(arr+prev_index)-1;
+                *(arr+prev_index)=value;
+                counter++;
+                printf("value=%d, prev_index=%d, index=%d, counter=%d\n",value,prev_index,index,counter);
+            }
+            *(arr+index)=index+1;
+        }
+    }
+    return counter;
+}
 
 char* isBalanced(char* s) 
 {
