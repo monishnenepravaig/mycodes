@@ -11,6 +11,220 @@
 char* readline();
 char** split_string(char*);
 
+
+char* readline();
+uint8_t Yes[]="YES";
+uint8_t No[]="NO";
+
+// Complete the minimumSwaps function below.
+int minimumSwaps(int arr_count, int* arr) 
+{
+    int i=0,counter=0,index=0,saved=0,value=0,prev_index=0;
+    for(i=0;i<arr_count;i++)
+    {   
+        if(*(arr+i)!=i+1)
+        {
+            saved=i+1;
+            printf("saved=%d\n",saved);
+            index=i;
+            while(*(arr+index)!=saved)
+            {
+                value=index+1;
+                prev_index=index;
+                index=*(arr+prev_index)-1;
+                *(arr+prev_index)=value;
+                counter++;
+                printf("value=%d, prev_index=%d, index=%d, counter=%d\n",value,prev_index,index,counter);
+            }
+            *(arr+index)=index+1;
+        }
+    }
+    return counter;
+}
+
+char* isBalanced(char* s) 
+{
+    uint8_t stack[STACK_SIZE];
+    uint8_t temp=0;
+    int head=0,i=0;
+    while(*(s+i)!=0)
+    {
+        temp=*(s+i++);
+        switch(temp)
+        {
+            case '{':
+            {
+                *(stack+head++)=temp;
+                break;
+            }
+            case '(':
+            {
+                *(stack+head++)=temp;
+                break;
+            }
+            case '[':
+            {
+                *(stack+head++)=temp;
+                break;
+            }
+            case '}':
+            {
+                if(*(stack+(--head))!='{')
+                {
+                    printf("case 1\n");
+                    return No;
+                }
+                break;
+            }
+            case ']':
+            {
+                if(*(stack+(--head))!='[')
+                {
+                    printf("case 2\n");
+                    return No;
+                }
+                break;
+            }
+            case ')':
+            {
+                if(*(stack+(--head))!='(')
+                {
+                    printf("case 3\n");
+                    return No;
+                }
+                break;
+            }
+        }
+        if(head<0)
+        {
+            printf("case 5\n");
+            return No;
+        }
+    }
+    if(head>1)
+    {
+        printf("case 6\n");
+        return No;
+    }
+    return Yes;
+}
+
+uint8_t check_palindrome(uint8_t* str,int size)
+{
+    int i=0;
+    uint8_t x=*str;
+    for(i=0;i<size;i++)
+    {
+        printf("%c",*(str+i));
+    }
+    printf("\n");
+    for(i=0;i<size/2;i++)
+    {
+        if((x!=*(str+i))||(x!=*(str+size-i-1)))
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
+// Complete the maxMin function below.
+int maxMin(int k, int arr_count, int* arr) 
+{
+    int min_unfairness=0x7FFFFFFF;
+    int i=0,j=0,temp=0;
+    merge_sort(arr_count,arr);
+    for(i=0;i<arr_count-k+1;i++)
+    {
+        temp=*(arr+i+k-1)-*(arr+i);
+        if(temp<min_unfairness)
+        {
+            min_unfairness=temp;
+        }
+    }
+    return min_unfairness;
+}
+
+int main()
+{
+    FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
+
+    char* n_endptr;
+    char* n_str = readline();
+    int n = strtol(n_str, &n_endptr, 10);
+
+    if (n_endptr == n_str || *n_endptr != '\0') { exit(EXIT_FAILURE); }
+
+    char* k_endptr;
+    char* k_str = readline();
+    int k = strtol(k_str, &k_endptr, 10);
+
+    if (k_endptr == k_str || *k_endptr != '\0') { exit(EXIT_FAILURE); }
+
+    int* arr = malloc(n * sizeof(int));
+
+    for (int i = 0; i < n; i++) {
+        char* arr_item_endptr;
+        char* arr_item_str = readline();
+        int arr_item = strtol(arr_item_str, &arr_item_endptr, 10);
+
+        if (arr_item_endptr == arr_item_str || *arr_item_endptr != '\0') { exit(EXIT_FAILURE); }
+
+        *(arr + i) = arr_item;
+    }
+
+    int arr_count = n;
+
+    int result = maxMin(k, arr_count, arr);
+
+    fprintf(fptr, "%d\n", result);
+
+    fclose(fptr);
+
+    return 0;
+}
+
+long sum_factorial(int number)
+{
+    long sum=0;
+    int i=0;
+    for(i=0;i<number+1;i++)
+    {
+        sum+=i;
+    }
+    return sum;
+}
+
+// Complete the substrCount function below.
+long substrCount(int n, char* s) 
+{
+    int start=0,end=0,size=0,check=0,i=0;
+    uint8_t x=0;
+    long count=0;
+    for(start=0;start<n;start++)
+    {
+        x=*(s+start);
+        size=0;
+        check=0;
+        while(*(s+start+(++size))==x);
+        printf("size=%d\n",size);
+        count+=sum_factorial(size);
+        printf("n:count=%d\n",count);
+        for(i=0;i<size;i++)
+        {
+            check=check_palindrome(s+start+i,(size-i)*2+1);
+            if(check==1)
+            {
+                count+=1;
+                printf("p:count=%d\n",count);
+            }
+        }
+        start+=size-1;
+    }
+    return count;
+}
+
 int* rotLeft(int a_count, int* a, int d, int* result_count)
 {
     int j=0;
