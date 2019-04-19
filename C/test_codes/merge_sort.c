@@ -8,7 +8,75 @@
 #define DATA_SIZE 256
 #define True 1
 #define False 0
- 
+
+void merge_sort_alphabetical(int32_t count,uint8_t** data)
+{
+    int32_t middle=count/2,i=0,j=0,temp_counter=0;
+    uint8_t* temp;
+    uint8_t** temp_ptr = (uint8_t**)malloc(count);
+    printf("\n\ncount=%d,list=",count);
+    for(i=0;i<count;i++)
+    {
+	printf("\t%s",*(data+i));
+    }
+    if((count==1)||(count==0))
+    {
+        return;
+    }
+    if(count==2)
+    {
+        if(strcmp(*(data),*(data+1))>0)
+        {
+            temp=*(data);
+            *(data)=*(data+1);
+            *(data+1)=temp;
+        }
+        return;
+    }
+    printf("\nmiddle=%d,\tcount=%d\n",middle,count);
+    merge_sort_alphabetical(middle,data);
+    merge_sort_alphabetical(count-middle,data+middle);
+    i=0;
+    j=middle;
+    while(temp_counter<count)
+    {
+	printf("\ni=%d,\tj=%d,\tmiddle=%d,\tcount=%d\n",i,j,middle,count);
+	if(j>=count)
+	{	
+		printf("\ncondition 1");
+		*(temp_ptr+temp_counter++)=*(data+i++);
+	}
+	else if(i>=middle)
+	{
+		printf("\ncondition 2");
+		*(temp_ptr+temp_counter++)=*(data+j++);
+	}
+	else if(strcmp(*(data+i),*(data+j))<0)
+	{
+		printf("\ncondition 3");
+		*(temp_ptr+temp_counter++)=*(data+i++);
+	}
+	else
+	{
+		printf("\ncondition 4");
+		*(temp_ptr+temp_counter++)=*(data+j++);
+	}
+    }
+    temp_counter=0;
+    while(temp_counter<count)
+    {
+	*(data+temp_counter)=*(temp_ptr+temp_counter);
+    	temp_counter++;
+    }
+    printf("\n\ncount=%d,sorted list=",count);
+    for(i=0;i<count;i++)
+    {
+	printf("\t%s",*(data+i));
+    }
+    free(temp_ptr);
+    return;
+}
+
 
 void merge_sort(int32_t count,int32_t* data)
 {
