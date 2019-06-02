@@ -10,7 +10,7 @@ typedef struct element_s
 } element;
 
 /* root of the list */
-element* first = 0;
+element* first;
 
 /* insert specified item at beginning of list */
 void insert_first(element *item)
@@ -28,7 +28,7 @@ element *remove_first( void )
 }
 
 /* remove and return item from end of list. returns 0 (NULL pointer) if list is empty. */
-element *remove_last(void)
+element* remove_last(void)
 {
 	if(first==NULL)
 	{
@@ -51,7 +51,7 @@ element *remove_last(void)
 }
 
 /* remove and return item from end of list. returns 0 (NULL pointer) if list is empty. */
-element *remove_node_matched(void)
+element* remove_node_matched(void)
 {
 	if(first==NULL)
 	{
@@ -100,10 +100,8 @@ void main()
 	}
 	print_ll();
 	printf("\nstart removing\n");
-
-		removed=remove_last();
-		printf("%d\t",*(uint32_t*)(removed->data));
-	}
+	removed=remove_last();
+	printf("%d\t",*(uint32_t*)(removed->data));
 	removed=remove_last();
 	print_ll();
 }
