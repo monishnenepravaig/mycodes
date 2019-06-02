@@ -5,6 +5,7 @@
 #define SIZE 10
 #define TOTAL_NODES 20
 #define RANGE 100
+#define HASH_SIZE 1000
 
 typedef struct node_t
 {
@@ -14,7 +15,6 @@ typedef struct node_t
 
 node_t head;
 node_t nodes[TOTAL_NODES];
-
 
 void ll_print(node_t** head_ptr)
 {
@@ -87,6 +87,39 @@ void ll_sort(node_t** head_ptr)
 	return;
 }
 
+node_t* ll_merge(node_t** head_ptr1, node_t** head_ptr2)
+{
+	node_t* current;
+	current=*head_ptr1;	
+	node_t** hashtable=(node_t**)calloc(HASH_SIZE,sizeof(node_t**));		
+	while(current!=NULL)
+	{
+		if(*(hashtable+(((uint64_t)current)%HASH_SIZE))==NULL)
+		{
+			*(hashtable+(((uint64_t)current)%HASH_SIZE))=current;
+		}
+		else
+		{
+			return *(hashtable+(((uint64_t)current)%HASH_SIZE));
+		}
+		current=current->next;
+	}
+	current=*head_ptr2;		
+	while(current!=NULL)
+	{
+		if(*(hashtable+(((uint64_t)current)%HASH_SIZE))==NULL)
+		{
+			*(hashtable+(((uint64_t)current)%HASH_SIZE))=current;
+		}
+		else
+		{
+			return *(hashtable+(((uint64_t)current)%HASH_SIZE));
+		}
+		current=current->next;
+	}
+	return NULL;
+}
+
 void ll_add_tail(node_t** head_ptr, node_t* new)
 {
 	node_t* current = *head_ptr;
@@ -123,8 +156,10 @@ void ll_reverse(node_t** head_ptr)
 
 void main(void)
 {
-	int i=0;
+	int i=0,temp=0;
 	node_t* head_ptr=&head;
+	node_t head2,*returned,*head2_ptr;
+	head2_ptr=&head2;
 	srand(time(NULL));
 	head.data=rand()%RANGE;
 	for(i=0;i<TOTAL_NODES;i++)
@@ -134,9 +169,22 @@ void main(void)
 		//printf("Adding node %d\n",i);
 		ll_add_tail(&head_ptr,&nodes[i]);
 	}
+	head2.data=143;
+	//head2.next=NULL;
+	temp=rand()%TOTAL_NODES;
+	head2.next=&nodes[temp];
 	ll_print(&head_ptr);
 	ll_reverse(&head_ptr);
 	ll_print(&head_ptr);
 	ll_sort(&head_ptr);
 	ll_print(&head_ptr);
+	returned = ll_merge(&head_ptr,&head2_ptr);
+	if(returned!=NULL)
+	{
+		printf("address:%lx data:%d\ttemp:%d\n",(uint64_t)returned,returned->data,temp);
+	}
+	else
+	{
+		printf("No overlap detected\n");
+	}
 }
