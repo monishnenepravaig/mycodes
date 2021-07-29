@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include "common.h"
 
 typedef struct node_t
 {

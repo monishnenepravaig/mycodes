@@ -1,10 +1,15 @@
-	common_sources= linklist.c
+	common_sources= main.c \
+			linklist.c \
+			file_operations.c	
 	
-	common_includes = linklist.h 
+	common_includes = main.h \
+			  linklist.h \
+			  file_operations.h \
+			  common.h
 
 	common_flags =	-g \
 			-O0 \
-			-lpthread\
+			-lpthread \
 			-pthread \
 			-lrt \
 			-lm \
@@ -24,7 +29,7 @@
 	go \
 	run 
 
-build:	linklist.elf	
+build:	main.elf	
 
 %.elf:	$(objects)	$(deps)
 	$(CC)	$(flags)	-o	$@	$(objects)	
