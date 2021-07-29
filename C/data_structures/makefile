@@ -1,10 +1,8 @@
 	common_sources= main.c \
-			linklist.c \
-			file_operations.c	
+			linklist.c	
 	
 	common_includes = main.h \
 			  linklist.h \
-			  file_operations.h \
 			  common.h
 
 	common_flags =	-g \

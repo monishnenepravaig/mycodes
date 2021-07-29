@@ -12,4 +12,3 @@
 #define WORDSIZE 20
 #define ALPHABETS 26
 
-static uint8_t* fname="pokemon_raw.txt";
