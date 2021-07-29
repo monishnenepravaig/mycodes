@@ -6,3 +6,4 @@ typedef struct node_t
 	uint8_t* data;
 }node_t;
 
+void create_data_ll(void);
