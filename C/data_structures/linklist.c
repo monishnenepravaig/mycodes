@@ -1,5 +1,58 @@
 #include "linklist.h"
 
+
+
+node_t* merge_sorted_ll(node_t* a, node_t* b)
+{
+	int32_t i=0;
+	node_t* dummy=NULL;
+	if(a==NULL)return b;
+	else if(b==NULL)return a;
+	while((*(a->data+i)!=*(b->data+i))||(*(a->data+i)=='\0')||(*(b->data+i)=='\0'))i++;
+	if(*(a->data+i)<=*(b->data+i))
+	{
+		dummy=a;
+		printf("%s",a->data);
+		dummy->next = merge_sorted_ll(a->next,b);
+	}
+	else
+	{
+		dummy=b;
+		printf("%s",b->data);
+		dummy->next = merge_sorted_ll(a,b->next);
+	}
+	return dummy;
+	
+}
+
+node_t* merge_sort_ll(node_t* head_ptr)
+{
+	printf("entered merge sort at head %s",head_ptr->data);
+	int check=0;
+	node_t *head=head_ptr,*half,*dummy;
+	if(head==NULL||head->next==NULL)return 0;
+	half=head;
+	dummy=head->next;
+	while(dummy!=NULL)
+	{
+		dummy=dummy->next;
+		printf("dummy-%s",dummy->data);
+		if(dummy!=NULL);
+		{
+			half=half->next;
+			printf("half-%s",half->data);
+			dummy=dummy->next;
+			printf("dummy-%s",dummy->data);
+		}				
+	}
+	printf("half-%s",half->data);
+	dummy=merge_sort_ll(half);
+	half->next=NULL;
+	head=merge_sort_ll(head);
+	head_ptr=merge_sorted_ll(head,dummy);
+	return head_ptr;
+}
+
 int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 {
 	uint8_t* str=(uint8_t*)malloc(WORDSIZE*sizeof(uint8_t));
@@ -51,4 +104,21 @@ int32_t print_data_ll(node_t** data_ll)
 		}
 	}
 	return i;
+}
+
+int32_t sort_data_ll(node_t** data_ll)
+{
+	int32_t i=0,check=0;
+	node_t* current_node;
+	for(i=0;i<ALPHABETS;i++)
+	{
+		current_node=*(data_ll+i);
+		if(current_node==NULL)
+		{
+			printf("NULL node");
+		}
+		else
+		current_node=merge_sort_ll(current_node);
+	}
+	return check;
 }
