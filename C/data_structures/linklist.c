@@ -1,83 +1,31 @@
 #include "linklist.h"
 
-Node* SortedMerge(Node* a, Node* b);
-void FrontBackSplit(Node* source,
-					Node** frontRef, Node** backRef);
-
-/* sorts the linked list by changing next pointers (not data) */
-void MergeSort(Node** headRef)
+void delete_last_node_ll(node_t* head)
 {
-	Node* head = *headRef;
-	Node* a;
-	Node* b;
-
-	/* Base case -- length 0 or 1 */
-	if ((head == NULL) || (head->next == NULL)) {
-		return;
+	node_t* current, *prev;
+	current = head;
+	while(current!=NULL)
+	{
+		prev=current;
+		current=current->next;
 	}
-
-	/* Split head into 'a' and 'b' sublists */
-	FrontBackSplit(head, &a, &b);
-
-	/* Recursively sort the sublists */
-	MergeSort(&a);
-	MergeSort(&b);
-
-	/* answer = merge the two sorted lists together */
-	*headRef = SortedMerge(a, b);
+	if(prev->data==NULL)
+	{
+		free(prev);
+	}
+	return;
 }
 
-/* See https:// www.geeksforgeeks.org/?p=3622 for details of this
-function */
-Node* SortedMerge(Node* a, Node* b)
+void print_ll(node_t** head_ptr)
 {
-	Node* result = NULL;
-
-	/* Base cases */
-	if (a == NULL)
-		return (b);
-	else if (b == NULL)
-		return (a);
-
-	/* Pick either a or b, and recur */
-	if (a->data <= b->data) {
-		result = a;
-		result->next = SortedMerge(a->next, b);
-	}
-	else {
-		result = b;
-		result->next = SortedMerge(a, b->next);
-	}
-	return (result);
-}
-
-/* UTILITY FUNCTIONS */
-/* Split the nodes of the given list into front and back halves,
-	and return the two lists using the reference parameters.
-	If the length is odd, the extra node should go in the front list.
-	Uses the fast/slow pointer strategy. */
-void FrontBackSplit(Node* source,
-					Node** frontRef, Node** backRef)
-{
-	Node* fast;
-	Node* slow;
-	slow = source;
-	fast = source->next;
-
-	/* Advance 'fast' two nodes, and advance 'slow' one node */
-	while (fast != NULL) {
-		fast = fast->next;
-		if (fast != NULL) {
-			slow = slow->next;
-			fast = fast->next;
-		}
-	}
-
-	/* 'slow' is before the midpoint in the list, so split it in two
-	at that point. */
-	*frontRef = source;
-	*backRef = slow->next;
-	slow->next = NULL;
+	node_t* current=*head_ptr;
+	while(current!=NULL)
+	{
+		printf("%s\t",current->data);
+		current = current->next;
+	}	
+	printf("\n");
+	return;
 }
 
 node_t* merge_sorted_ll(node_t* a, node_t* b)
@@ -100,7 +48,53 @@ node_t* merge_sorted_ll(node_t* a, node_t* b)
 		dummy->next = merge_sorted_ll(a,b->next);
 	}
 	return dummy;
-	
+}
+
+void selection_sort_ll(node_t** head_ptr)
+{
+	int32_t found=0;
+	node_t dummy;
+	dummy.data=0;
+	dummy.next=NULL;
+	node_t* prev = NULL;
+	node_t* temp = NULL;
+	node_t* current = (*head_ptr);
+	node_t* search = &dummy;
+	search->next=NULL;
+	node_t* new_head = search;
+	while(current!=NULL)
+	{
+		found=0;
+		prev=NULL;
+		search=new_head;
+		while((search->data<current->data)&&(search->next!=NULL))
+		{
+			prev=search;
+			search=search->next;
+		}
+		temp=current;
+		current=current->next;		
+		if(prev==NULL)
+		{
+			temp->next=new_head;
+			new_head=temp;				
+		}
+		else
+		{
+			prev->next=temp;
+			temp->next=search;
+		}	
+	}
+	prev=NULL;
+	current=new_head;
+	while(current->next!=NULL)
+	{
+		prev=current;
+		current=current->next;
+	}
+	prev->next=NULL;
+	*head_ptr=new_head;
+	return;
 }
 
 node_t* merge_sort_ll(node_t* head_ptr)
@@ -134,7 +128,7 @@ node_t* merge_sort_ll(node_t* head_ptr)
 int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 {
 	uint8_t* str=(uint8_t*)malloc(WORDSIZE*sizeof(uint8_t));
-	int32_t eof_check=0;
+	int32_t eof_check=0,counter=0;
 	node_t* current_node;
 	FILE *fptr = fopen(fname,"r");
 	while(eof_check != EOF_new)
@@ -142,6 +136,7 @@ int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 		str=fgets(str,READ_SIZE,fptr);
 		if(str!=NULL)
 		{	
+			counter=1;
 			if(*(data_ll+(*str-'A'))==NULL)
 			{
 				*(data_ll+(*str-'A'))=(node_t*)malloc(sizeof(node_t));
@@ -149,11 +144,14 @@ int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 			current_node=*(data_ll+(*str-'A'));
 			while(current_node->next!=NULL)
 			{
+				counter++;
 				current_node=current_node->next;
 			}
 			current_node->next=(node_t*)malloc(sizeof(node_t));
 			current_node->data=(uint8_t*)malloc(strlen(str)*sizeof(node_t));
+			current_node->count=counter;
 			strcpy(current_node->data,str);
+			printf("%d %s",counter,current_node->data);
 		}
 		eof_check=feof(fptr);
 	}
@@ -170,14 +168,10 @@ int32_t print_data_ll(node_t** data_ll)
 	{
 		printf("\n\rPokemons starting with letter %c\n\r",'A'+i);
 		current_node=*(data_ll+i);
-		if(current_node==NULL)
-		{
-			printf("NULL node");
-		}
 		counter=1;
-		while(current_node->data!=NULL)
+		while(current_node!=NULL)
 		{
-			printf("%d %s",counter++,current_node->data);		
+			printf("%d %s",current_node->count,current_node->data);		
 			current_node=current_node->next;
 		}
 	}
@@ -191,11 +185,6 @@ int32_t sort_data_ll(node_t** data_ll)
 	for(i=0;i<ALPHABETS;i++)
 	{
 		current_node=*(data_ll+i);
-		if(current_node==NULL)
-		{
-			printf("NULL node");
-		}
-		else
 		current_node=merge_sort_ll(current_node);
 	}
 	return check;
