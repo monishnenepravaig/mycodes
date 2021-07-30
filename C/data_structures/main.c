@@ -8,8 +8,8 @@ int32_t main(int32_t argc, uint8_t**argv)
 	check=print_data_ll(data_ll);
 	check=reverse_data_ll(data_ll);
 	check=print_data_ll(data_ll);
-	//check=sort_data_ll(data_ll);
-	//check=print_data_ll(data_ll);
+	check=sort_data_ll(data_ll);
+	check=print_data_ll(data_ll);
 	printf("\n\rmain executed\n\r");
 	return 0;
 }

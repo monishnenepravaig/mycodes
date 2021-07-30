@@ -5,7 +5,7 @@ void print_ll(node_t** head_ptr)
 	node_t* current=*head_ptr;
 	while(current!=NULL)
 	{
-		printf("%s\t",current->data);
+		printf("%d %s",current->count,current->data);
 		current = current->next;
 	}	
 	printf("\n");
@@ -63,7 +63,7 @@ int32_t print_data_ll(node_t** data_ll)
 		printf("\n\r");
 		while(current_node!=NULL)
 		{
-			printf("%d %s",current_node->count,current_node->data);		
+			printf("%d\t%s",current_node->count,current_node->data);		
 			current_node=current_node->next;
 		}
 	}
@@ -97,101 +97,42 @@ int32_t reverse_data_ll(node_t** data_ll)
 	return check;
 }
 
-node_t* merge_sorted_ll(node_t* a, node_t* b)
+node_t* sort_ll(node_t* head)
 {
-	int32_t i=0;
-	node_t* dummy=NULL;
-	if(a==NULL)return b;
-	else if(b==NULL)return a;
-	while((*(a->data+i)!=*(b->data+i))||(*(a->data+i)=='\0')||(*(b->data+i)=='\0'))i++;
-	if(*(a->data+i)<=*(b->data+i))
-	{
-		dummy=a;
-		printf("%s",a->data);
-		dummy->next = merge_sorted_ll(a->next,b);
-	}
-	else
-	{
-		dummy=b;
-		printf("%s",b->data);
-		dummy->next = merge_sorted_ll(a,b->next);
-	}
-	return dummy;
-}
-
-void selection_sort_ll(node_t** head_ptr)
-{
-	int32_t found=0;
-	node_t dummy;
-	dummy.data=0;
-	dummy.next=NULL;
-	node_t* prev = NULL;
-	node_t* temp = NULL;
-	node_t* current = (*head_ptr);
-	node_t* search = &dummy;
-	search->next=NULL;
-	node_t* new_head = search;
+	int32_t i=0,diff=0;
+	node_t *sorted_head=head,*current=head->next,*buffer,*sorted,*prev;
+	sorted_head->next=NULL;
 	while(current!=NULL)
 	{
-		found=0;
-		prev=NULL;
-		search=new_head;
-		while((search->data<current->data)&&(search->next!=NULL))
-		{
-			prev=search;
-			search=search->next;
-		}
-		temp=current;
-		current=current->next;		
-		if(prev==NULL)
-		{
-			temp->next=new_head;
-			new_head=temp;				
-		}
-		else
-		{
-			prev->next=temp;
-			temp->next=search;
-		}	
-	}
-	prev=NULL;
-	current=new_head;
-	while(current->next!=NULL)
-	{
-		prev=current;
+		buffer=current;
 		current=current->next;
-	}
-	prev->next=NULL;
-	*head_ptr=new_head;
-	return;
-}
-
-node_t* merge_sort_ll(node_t* head_ptr)
-{
-	printf("entered merge sort at head %s",head_ptr->data);
-	int check=0;
-	node_t *head=head_ptr,*half,*dummy;
-	if(head==NULL||head->next==NULL)return 0;
-	half=head;
-	dummy=head->next;
-	while(dummy!=NULL)
-	{
-		dummy=dummy->next;
-		printf("dummy-%s",dummy->data);
-		if(dummy!=NULL);
+		sorted=sorted_head;
+		prev=sorted;
+		if(strcmp(sorted_head->data,buffer->data)>0)
 		{
-			half=half->next;
-			printf("half-%s",half->data);
-			dummy=dummy->next;
-			printf("dummy-%s",dummy->data);
-		}				
+			sorted_head=buffer;
+			buffer->next=sorted;
+			continue;
+		}
+		while(sorted!=NULL)
+		{
+			if(strcmp(sorted->data,buffer->data)>0)
+			{
+				prev->next=buffer;
+				buffer->next=sorted;
+				break;
+			}
+			prev=sorted;
+			sorted=sorted->next;
+			if(sorted==NULL)
+			{	
+				prev->next=buffer;
+				buffer->next=NULL;
+				break;
+			}				
+		}
 	}
-	printf("half-%s",half->data);
-	dummy=merge_sort_ll(half);
-	half->next=NULL;
-	head=merge_sort_ll(head);
-	head_ptr=merge_sorted_ll(head,dummy);
-	return head_ptr;
+	return sorted_head;
 }
 
 int32_t sort_data_ll(node_t** data_ll)
