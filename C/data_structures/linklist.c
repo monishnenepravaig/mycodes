@@ -140,18 +140,23 @@ int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 			if(*(data_ll+(*str-'A'))==NULL)
 			{
 				*(data_ll+(*str-'A'))=(node_t*)malloc(sizeof(node_t));
+				current_node=*(data_ll+(*str-'A'));
 			}
-			current_node=*(data_ll+(*str-'A'));
-			while(current_node->next!=NULL)
+			else
 			{
 				counter++;
+				current_node=*(data_ll+(*str-'A'));
+				while(current_node->next!=NULL)
+				{
+					counter++;
+					current_node=current_node->next;
+				}
+				current_node->next=(node_t*)malloc(sizeof(node_t));
 				current_node=current_node->next;
 			}
-			current_node->next=(node_t*)malloc(sizeof(node_t));
 			current_node->data=(uint8_t*)malloc(strlen(str)*sizeof(node_t));
 			current_node->count=counter;
 			strcpy(current_node->data,str);
-			printf("%d %s",counter,current_node->data);
 		}
 		eof_check=feof(fptr);
 	}
