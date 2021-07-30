@@ -97,6 +97,103 @@ int32_t reverse_data_ll(node_t** data_ll)
 	return check;
 }
 
+node_t* merge_sorted_ll(node_t* a, node_t* b)
+{
+	int32_t i=0;
+	node_t* dummy=NULL;
+	if(a==NULL)return b;
+	else if(b==NULL)return a;
+	while((*(a->data+i)!=*(b->data+i))||(*(a->data+i)=='\0')||(*(b->data+i)=='\0'))i++;
+	if(*(a->data+i)<=*(b->data+i))
+	{
+		dummy=a;
+		printf("%s",a->data);
+		dummy->next = merge_sorted_ll(a->next,b);
+	}
+	else
+	{
+		dummy=b;
+		printf("%s",b->data);
+		dummy->next = merge_sorted_ll(a,b->next);
+	}
+	return dummy;
+}
+
+void selection_sort_ll(node_t** head_ptr)
+{
+	int32_t found=0;
+	node_t dummy;
+	dummy.data=0;
+	dummy.next=NULL;
+	node_t* prev = NULL;
+	node_t* temp = NULL;
+	node_t* current = (*head_ptr);
+	node_t* search = &dummy;
+	search->next=NULL;
+	node_t* new_head = search;
+	while(current!=NULL)
+	{
+		found=0;
+		prev=NULL;
+		search=new_head;
+		while((search->data<current->data)&&(search->next!=NULL))
+		{
+			prev=search;
+			search=search->next;
+		}
+		temp=current;
+		current=current->next;		
+		if(prev==NULL)
+		{
+			temp->next=new_head;
+			new_head=temp;				
+		}
+		else
+		{
+			prev->next=temp;
+			temp->next=search;
+		}	
+	}
+	prev=NULL;
+	current=new_head;
+	while(current->next!=NULL)
+	{
+		prev=current;
+		current=current->next;
+	}
+	prev->next=NULL;
+	*head_ptr=new_head;
+	return;
+}
+
+node_t* merge_sort_ll(node_t* head_ptr)
+{
+	printf("entered merge sort at head %s",head_ptr->data);
+	int check=0;
+	node_t *head=head_ptr,*half,*dummy;
+	if(head==NULL||head->next==NULL)return 0;
+	half=head;
+	dummy=head->next;
+	while(dummy!=NULL)
+	{
+		dummy=dummy->next;
+		printf("dummy-%s",dummy->data);
+		if(dummy!=NULL);
+		{
+			half=half->next;
+			printf("half-%s",half->data);
+			dummy=dummy->next;
+			printf("dummy-%s",dummy->data);
+		}				
+	}
+	printf("half-%s",half->data);
+	dummy=merge_sort_ll(half);
+	half->next=NULL;
+	head=merge_sort_ll(head);
+	head_ptr=merge_sorted_ll(head,dummy);
+	return head_ptr;
+}
+
 int32_t sort_data_ll(node_t** data_ll)
 {
 	int32_t i=0,check=0;
