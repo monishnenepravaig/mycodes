@@ -43,6 +43,7 @@ int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 			current_node->data=(uint8_t*)malloc(strlen(str)*sizeof(node_t));
 			current_node->count=counter;
 			strcpy(current_node->data,str);
+			(*(data_ll+(*str-'A')))->count=counter;
 		}
 		eof_check=feof(fptr);
 	}
@@ -102,7 +103,9 @@ int32_t sort_data_ll(node_t** data_ll)
 	node_t* current_node;
 	for(i=0;i<ALPHABETS;i++)
 	{
-		current_node=*(data_ll+i);
+		current_node=(*(data_ll+i))->next;
+		current_node=sort_ll(current_node);
+		(*(data_ll+i))->next=current_node;
 	}
 	return check;
 }
