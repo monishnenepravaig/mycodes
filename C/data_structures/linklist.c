@@ -99,7 +99,6 @@ int32_t reverse_data_ll(node_t** data_ll)
 
 node_t* sort_ll(node_t* head)
 {
-	int32_t i=0,diff=0;
 	node_t *sorted_head=head,*current=head->next,*buffer,*sorted,*prev;
 	sorted_head->next=NULL;
 	while(current!=NULL)
@@ -110,7 +109,7 @@ node_t* sort_ll(node_t* head)
 		prev=sorted;
 		if(strcmp(sorted_head->data,buffer->data)>0)
 		{
-			sorted_head=buffer;
+			sorted_head=buffer; //insert at head
 			buffer->next=sorted;
 			continue;
 		}
@@ -118,7 +117,7 @@ node_t* sort_ll(node_t* head)
 		{
 			if(strcmp(sorted->data,buffer->data)>0)
 			{
-				prev->next=buffer;
+				prev->next=buffer; //insert in between
 				buffer->next=sorted;
 				break;
 			}
@@ -126,7 +125,7 @@ node_t* sort_ll(node_t* head)
 			sorted=sorted->next;
 			if(sorted==NULL)
 			{	
-				prev->next=buffer;
+				prev->next=buffer; //insert at tail
 				buffer->next=NULL;
 				break;
 			}				
