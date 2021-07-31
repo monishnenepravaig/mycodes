@@ -15,20 +15,21 @@ void print_ll(node_t** head_ptr)
 int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 {
 	uint8_t* str=(uint8_t*)malloc(WORDSIZE*sizeof(uint8_t));
-	int32_t eof_check=0,counter=0,i=0;
+	int32_t eof_check=0,counter=0,i=0,rank=1;
 	node_t* current_node;
 	FILE *fptr = fopen(fname,"r");
 	for(i=0;i<ALPHABETS;i++)
 	{
 		*(data_ll+i)=(node_t*)malloc(sizeof(node_t));
 		current_node=*(data_ll+i);
-		current_node->data=(uint8_t*)malloc(2*WORDSIZE);
+		current_node->data=(uint8_t*)malloc(WORDSIZE);
 		sprintf(current_node->data,"Pokemons starting with letter %c\n\r",'A'+i);
 		current_node->count=0;
 	}
 	while(eof_check != EOF_new)
 	{
 		str=fgets(str,READ_SIZE,fptr);
+		printf("%s",str);
 		if(str!=NULL)
 		{	
 			counter=1;
@@ -41,7 +42,7 @@ int32_t create_data_ll(uint8_t* fname, node_t** data_ll)
 			current_node->next=(node_t*)malloc(sizeof(node_t));
 			current_node=current_node->next;
 			current_node->data=(uint8_t*)malloc(strlen(str)*sizeof(node_t));
-			current_node->count=counter;
+			current_node->count=rank++;
 			strcpy(current_node->data,str);
 			(*(data_ll+(*str-'A')))->count=counter;
 		}
